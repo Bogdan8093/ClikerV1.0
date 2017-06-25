@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
-// тут была амбициозная попытка сделать нечто прекрасное, но что-то пошло не так...
+
 public class GenerationLevel : MonoBehaviour {
    /* int level;
     public GameObject levelUI;

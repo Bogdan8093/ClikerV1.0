@@ -14,7 +14,13 @@ public class UserResponce : MonoBehaviour
         String userName;
         String pwd ;
         String emailId= "gsj@gmail.com" ;
-        
+
+
+        UserService userService = App42API.BuildUserService();
+     
+       
+         
+       
         public void aut  ()
         {
             ServiceAPI api = new ServiceAPI("37be471516e78a3693e7ca3ad228a8d73d9a55a9667b50838d97edd3dd80ee99", "4d70deecc103dccd19a3ad383c0f2949dd99abafa6a60cf23b4be995263c415c");

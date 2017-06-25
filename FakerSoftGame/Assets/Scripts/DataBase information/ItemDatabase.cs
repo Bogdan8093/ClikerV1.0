@@ -12,14 +12,14 @@ public class ItemDatabase : MonoBehaviour {
         itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
         ConstractIremDatabase();
 
-        Debug.Log(FetchItemByID(1).Description);
+        Debug.Log(FetchItemByID(1).getDescription());
     }
 
     public Item FetchItemByID(int id)
     {
         for (int i = 0; i < database.Count; i++)
         {
-            if (database[i].ID==id)       
+            if (database[i].getID()==id)       
                 return database[i];      
         }
             return null;
@@ -29,11 +29,11 @@ public class ItemDatabase : MonoBehaviour {
     {
         for (int i = 0; i < itemData.Count; i++)
         {
-            database.Add(new Item((int)itemData[i]["id"], itemData[i]["title"].ToString(), (int)itemData[i]["value"], (int)itemData[i]["stats"]["power"], (int)itemData[i]["stats"]["defence"], (int)itemData[i]["stats"]["vitality"], itemData[i]["description"].ToString(), (int)itemData[i]["rarity"], itemData[i]["slug"].ToString()));
+           // database.Add(new Item((int)itemData[i]["id"], itemData[i]["title"].ToString(), (int)itemData[i]["value"], (int)itemData[i]["stats"]["power"], (int)itemData[i]["stats"]["defence"], (int)itemData[i]["stats"]["vitality"], itemData[i]["description"].ToString(), (int)itemData[i]["rarity"], itemData[i]["slug"].ToString()));
         }
     }
 }
-public class Item
+/*public class Item
 {
     public int ID{ get; set; }
     public string Title { get; set; }
@@ -58,4 +58,4 @@ public class Item
         this.Rarity = rarity;
         this.Slug = slug;
     }
-}
+}*/

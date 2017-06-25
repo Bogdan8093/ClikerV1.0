@@ -70,7 +70,7 @@ public class PlayerParametrs : MonoBehaviour {
     void Start()
     {
       
-        CalulateParams();
+        CalсulateParams();
        
         if (PlayerPrefs.HasKey("agility"))
             _agility = PlayerPrefs.GetInt("agility");
@@ -87,7 +87,7 @@ public class PlayerParametrs : MonoBehaviour {
       
     }
  
-    public void CalulateParams()
+    public void CalсulateParams()
         {
         //params
         float _spendingStregth  = 2 * _passiveLvlExecutioner;
@@ -149,12 +149,7 @@ public class PlayerParametrs : MonoBehaviour {
         _ETKInputLvlrush.text = _passiveLvlrush.ToString();
         _ETKInputLvlmagicArmor.text = _passiveLvlmagicArmor.ToString();
 
-        // костылек против варнингов - лучше проходите мимо, этого просто нету
-        #region
-        float Crutch = 0;
-        Crutch = _finalMultiCritPowerCoef + Crutch + _finalMultiplierRollbackCoolDown + _clickCritcoef + _monsterDamage + _monsterExp + _monsterGold
-            + _monsterDropCoef + _monsterMagicresist + correctiveHitStrangth;
-        #endregion
+
     }
     public void EtcChanges()
     {

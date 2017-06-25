@@ -22,8 +22,9 @@ public class UI : MonoBehaviour
 
     [SerializeField]
     private GameObject _abilities, _skills;
-   
-    public void FightScene()
+
+
+      public void FightScene()
     {
         SceneManager.LoadScene("clickScene");
     }

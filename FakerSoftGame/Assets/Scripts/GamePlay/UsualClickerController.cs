@@ -4,10 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
-// Скрипт действие - тут вызываются и исполняются основные действия над монстрами - непосредственно убывание здоровья
-// реакция на стандартный клик персонажа. Анализ здоровья монстра и последующий вызов ивента на хил со стороны монстра хиллера
-// Сложность в том что этот скрипт должен висеть на всех монстрах, по этому с этим нужно днликатно, если хотим тут добится данных
-// от какого-то конкретного типа монстров, то проверяем его тип через главный монстер класс и отсеиваем ненужных
+
 
 public class UsualClickerController : MonoBehaviour {
 
@@ -19,7 +16,7 @@ public class UsualClickerController : MonoBehaviour {
     [SerializeField]
     private  TextMesh _HealthText;
 
-  //  private float  coldownBarVelue;
+    private float  coldownBarVelue;
 
     
     public GameObject ColdownBar;
@@ -37,16 +34,16 @@ public class UsualClickerController : MonoBehaviour {
     private const float MAX_SCALE_X_VALUE_FOR_HEALTHBAR = 12.4f;
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
     private float _clickStrength;
-  //  private float _healthObjLockalScaleX;
-  //  private float _healthbarMaxValue;
-   // private float critChanse = 1.05f;
+    private float _healthObjLockalScaleX;
+    private float _healthbarMaxValue;
+    private float critChanse = 1.05f;
     private BoxCollider2D _monsterHitbox;
 
     private float MonsterArmorLevel;
 
     public bool stopFastDecreaseTime = true;
 
-   // private float correctiveHitStrangth;
+    private float correctiveHitStrangth;
     // public EnemyController gg = new EnemyController();
     private MonstersBasicClass currentMonster;
 
@@ -57,14 +54,14 @@ public class UsualClickerController : MonoBehaviour {
 
     void Start()
     {
-   //  _healthObjLockalScaleX = _healthBar.transform.localScale.x;
+     _healthObjLockalScaleX = _healthBar.transform.localScale.x;
         
-       // if(ColdownBar!= null)
-     //   coldownBarVelue = ColdownBar.transform.localScale.x;
+        if(ColdownBar!= null)
+        coldownBarVelue = ColdownBar.transform.localScale.x;
 
-     //   _healthbarMaxValue = _healthObjLockalScaleX;
+        _healthbarMaxValue = _healthObjLockalScaleX;
         _monsterHitbox = Monster.GetComponent<BoxCollider2D>();
-      //  correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
+        correctiveHitStrangth = BigMom.ENC.ClickStrengthCorrective;
         currentMonster = BigMom.ENC.BufferMonster;
       
       //  else
@@ -287,17 +284,17 @@ public class UsualClickerController : MonoBehaviour {
             currentMonster.HealthPoints -= _clickStrength;
             
 
-            _healthBar.transform.localScale = new Vector3(currentMonster.HealthPoints, 1f, 1f);  
+           // _healthBar.transform.localScale = new Vector3(currentMonster.HealthPoints, 1f, 1f);  
           //  BigMom.ENC.UpdateScore(); // we really need this?
 
         }
         Debug.Log("XP = " + currentMonster.HealthPoints.ToString());
-        if (currentMonster.HealthPoints <= 0)
+        if (currentMonster.HealthPoints < 1)
         {
             if (currentMonster.TypeOfThisMonster != MonstersBasicClass.MonsterType.coldownCastObject)
             {
                 BigMom.ENC.countAliveMonsters--;
-                if (BigMom.ENC.countAliveMonsters <= 0)
+                if (BigMom.ENC.countAliveMonsters < 1)
                 {
                     BigMom.ENC.StartCorutineOutside();
                 }
@@ -319,6 +316,7 @@ public class UsualClickerController : MonoBehaviour {
     {
         Debug.Log(currentMonster.TypeOfThisMonster.ToString());
         ongoingProcesses();
+        _healthBar.transform.localScale = new Vector3(currentMonster.HealthPoints, 1f, 1f);
         // HealingAura();
         currentMonster.ArmoredBuff(currentMonster);
         

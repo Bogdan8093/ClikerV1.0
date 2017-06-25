@@ -15,10 +15,10 @@ public class testclickimage : MonoBehaviour, IPointerClickHandler,
 {
   public  Image CountryImg;
 
-  //  Image SelectCountry;
+    Image SelectCountry;
    // public event testclickimage TapEvent;
     public delegate void ClickAction();
-  //  public static event ClickAction OnClicked;
+    public static event ClickAction OnClicked;
 
    // public Texture2D gg;
     public Image img;
@@ -100,7 +100,7 @@ public class testclickimage : MonoBehaviour, IPointerClickHandler,
     public void StopSelect()
     {
         StopAllCoroutines();
-      //  SelectCountry.color = new Color32(255, 255, 255, 0);
+        SelectCountry.color = new Color32(255, 255, 255, 0);
     }
     public void StartSelect()
     {
@@ -108,13 +108,13 @@ public class testclickimage : MonoBehaviour, IPointerClickHandler,
     }
     IEnumerator Selecting()
     {
-      //  int alpha=0;
+        int alpha=0;
         int count = 0;
         while (true)
         {
-        //    alpha = (int)Mathf.PingPong(count, 150);
+            alpha = (int)Mathf.PingPong(count, 150);
             count = count > 300 ? 0 : count + 5;
-        //    SelectCountry.color = new Color32(255, 255, 255, (byte)alpha);
+            SelectCountry.color = new Color32(255, 255, 255, (byte)alpha);
             yield return new WaitForFixedUpdate();
         }
     }

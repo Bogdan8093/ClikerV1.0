@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-// Логика работы и отрисовке когтей.
+
 public class CluvesLogic : MonoBehaviour {
 
     // Use this for initialization
