@@ -1,28 +1,69 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-public class Inventory : MonoBehaviour {
-   public GameObject inventoryPanel;
-    public GameObject slotPanel;
-   public  GameObject inventorySlot;
-   public  GameObject inventoryItem;
-
-    int slotAmount;
-    public List<Item> items = new List<Item>();
-    public List<GameObject> slots = new List<GameObject>();
-
-    void Start()
+using UnityEngine;
+//[Serializable]
+public class Invetory
+{
+    [NonSerialized]
+    private List<Item> items = new List<Item>();
+    public Invetory()
     {
 
-        slotAmount = 20;
-        inventorySlot.transform.localScale =new Vector3(0.1f, 0.1f, 0.1f);
-          //slotPanel = inventoryPanel.transform.FindChild("Slot Panel").gameObject;
-        for(int i =0; i<slotAmount;i++)
+    }
+    public List<Item> getItems()
+    {
+        return this.items;
+    }
+    public void setItems(List<Item> items)
+    {
+        this.items = items;
+    }
+    public void AddItem(Item item)
+    {
+        items.Add(item);
+    }
+    public void AddItems(List<Item> itemlist)
+    {
+        for (int i = 0; i < itemlist.Count; i++)
         {
-            slots.Add(Instantiate(inventorySlot));
-           
-            slots[i].transform.SetParent(slotPanel.transform);
-                
+            this.items.Add(itemlist[i]);
         }
+
+    }
+    public Item getItembyName(string name)
+    {
+        Item temp = items.Find(delegate (Item bk)
+        {
+            return bk.getTitle().Contains(name);
+        });
+        if (temp != null)
+        {
+            return temp;
+        }
+        return null;
+    }
+    public Item takeItembyName(string name)
+    {
+        Item temp = items.Find(delegate (Item bk)
+        {
+            return bk.getTitle().Contains(name);
+        });
+        if (temp != null)
+        {
+            items.Remove(temp);
+            return temp;
+        }
+        return null;
+    }
+    public List<Item> takeItems()
+    {
+        List<Item> temp = new List<Item>(items);
+        items.Clear();
+        return temp;
+    }
+    public int getSize()
+    {
+        return items.Count;
     }
 }

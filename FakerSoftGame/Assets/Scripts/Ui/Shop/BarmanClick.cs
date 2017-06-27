@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shop : MonoBehaviour {
+public class BarmanClick : MonoBehaviour {
     public GameObject ShopUI;
 
   void OnMouseDown ()
