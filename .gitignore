@@ -48,3 +48,5 @@ Thumbs.db
 # ============= #
 /FakerSoftGame/.vs/
 FakerSoftGame/\.vscode/
+
+FakerSoftGame/Assets/Scenes/Tavern*
