@@ -40,6 +40,8 @@ public static class BigMom
 
     public static DBkey DBkey;
 
+    public static GetUserInformation GU;
+
 
     public static void Init()
     {
@@ -53,6 +55,7 @@ public static class BigMom
         PS = GameObject.FindObjectOfType<PlayerSpells>();
         PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
         DBkey = GameObject.FindObjectOfType<DBkey>();
+        GU = GameObject.FindObjectOfType<GetUserInformation>();
     }
 
 }

@@ -6,20 +6,23 @@ using System.Text;
 
 public class GetUserInformation : MonoBehaviour {
 private string secretKey;
-string Pid, Plogin, Ppass, Pmail, Pint, Psta, Pagi, Pstr, Pexp, Plvl, PCchance, PCdamage;
+public string Pid, Plogin, Ppass, Pmail, Pint, Psta, Pagi, Pstr, Pexp, Plvl, PCchance, PCdamage;
 // В скрипте происходит всякая магия. Не лезь - убьет!
 	void Start() {
         secretKey = BigMom.DBkey.dbsecretkey;
         // ниже пример использования 
         //GetUserInfo("dark");
 	}
-    void GetUserInfo(string user){
+    public void GetUserInfo(string user){
         if(secretKey!=null){
             WWWForm form = new WWWForm();
             form.AddField("user", user);
 			form.AddField("secretKey", secretKey);
             WWW w = new WWW("http://s2s.ddns.net/db/GetUserInf.php", form);
             StartCoroutine(GetUserInf(w));
+                WaitForSeconds x;
+                while (!w.isDone)
+                x = new WaitForSeconds(0.1f);
         }
         else{
             Debug.Log("Введи сначала переменные и заработаю");
