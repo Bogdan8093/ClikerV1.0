@@ -83,13 +83,14 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4824012029538618}
+  - component: {fileID: 114470004502126330}
   m_Layer: 0
   m_Name: LevelMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1226090015420002
 GameObject:
   m_ObjectHideFlags: 1
@@ -147,7 +148,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4731862986893546}
   - component: {fileID: 212573276860055262}
-  - component: {fileID: 114679519430155754}
   m_Layer: 0
   m_Name: w256h2561372348486rectangle256
   m_TagString: Untagged
@@ -218,7 +218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1541404349644074
 GameObject:
   m_ObjectHideFlags: 1
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapUI: {fileID: 0}
-  CurrentUI: {fileID: 1184002281849210}
+  CurrentUI: {fileID: 1457494620826478}
 --- !u!114 &114351587616798102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1103,6 +1103,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurentIngicator: {fileID: 212322757985287114}
   NextIngicator: {fileID: 212864864850611768}
+--- !u!114 &114470004502126330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1184002281849210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d5d507cac597747b5efb9c5f0ca6eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ProgressBarActivePart: {fileID: 1313388107376712}
 --- !u!114 &114486691196052304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1127,18 +1139,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastScreenWidth: 0
---- !u!114 &114679519430155754
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1313388107376712}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0d5d507cac597747b5efb9c5f0ca6eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ProgressBarActivePart: {fileID: 1313388107376712}
 --- !u!114 &114714049605156426
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1248,7 +1248,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cef4a84dc9f00ba4bbadff855e80cdb2, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -1288,7 +1288,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cef4a84dc9f00ba4bbadff855e80cdb2, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -1408,7 +1408,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cef4a84dc9f00ba4bbadff855e80cdb2, type: 3}
   m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -1448,7 +1448,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cef4a84dc9f00ba4bbadff855e80cdb2, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -1688,7 +1688,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: cef4a84dc9f00ba4bbadff855e80cdb2, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
