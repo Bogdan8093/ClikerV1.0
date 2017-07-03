@@ -40,16 +40,8 @@ public static class BigMom
 
     public static DBkey DBkey;
 
-<<<<<<< HEAD
     public static Govnokod_ProgressBar GKPB;
 
-=======
-    public static DataBaseFunc DBF;
-
-    public static tempStats TS;
-
-    public static Govnokod_ProgressBar GKPB;
->>>>>>> f36844799a2b8629e7709a0e53bd0f9f74d0a3a9
 
     public static void Init()
     {
@@ -64,8 +56,6 @@ public static class BigMom
         PS = GameObject.FindObjectOfType<PlayerSpells>();
         PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
         DBkey = GameObject.FindObjectOfType<DBkey>();
-        DBF = GameObject.FindObjectOfType<DataBaseFunc>();
-        TS =  GameObject.FindObjectOfType<tempStats>();
     }
 
 }

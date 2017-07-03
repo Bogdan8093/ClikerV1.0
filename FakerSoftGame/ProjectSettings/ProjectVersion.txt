@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 m_EditorVersion: 5.6.1f1
-=======
-m_EditorVersion: 5.6.2xf1Linux
->>>>>>> f36844799a2b8629e7709a0e53bd0f9f74d0a3a9
