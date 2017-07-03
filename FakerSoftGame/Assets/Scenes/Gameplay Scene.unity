@@ -153,7 +153,7 @@ Prefab:
     - target: {fileID: 224036791235540094, guid: 795f9c38edb08d047a4aede5d118c80c,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224036791235540094, guid: 795f9c38edb08d047a4aede5d118c80c,
         type: 2}
@@ -228,6 +228,11 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: onSlowPunchClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 224912488520334966, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 795f9c38edb08d047a4aede5d118c80c, type: 2}
@@ -399,7 +404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -51.399994, y: 1.7}
+  m_AnchoredPosition: {x: -60, y: 135}
   m_SizeDelta: {x: -0.83999634, y: -0.83999634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &394133617
@@ -514,7 +519,7 @@ MonoBehaviour:
   _basicInputIntellect: {fileID: 921039418}
   _basicInputStamina: {fileID: 219528360}
   LvL_Score: 0
-  _basicClickDamage: 10
+  _basicClickDamage: 2
   _basicCritChance: 10
   _basicMultiplyCritPower: 1.5
   _basicMultiplyMagicPower: 1
@@ -573,7 +578,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 55.200012, y: -29.800003}
+  m_AnchoredPosition: {x: 60, y: 60}
   m_SizeDelta: {x: -0.83999634, y: -0.83999634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &420015185
@@ -709,7 +714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -111.01001, y: -40.800003}
+  m_AnchoredPosition: {x: -120, y: 60}
   m_SizeDelta: {x: -0.83999634, y: 0.16000366}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &545104381
@@ -1057,7 +1062,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -20.8, y: -50.350006}
+  m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 0.16000366, y: -0.83999634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &918630172
@@ -1187,7 +1192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 19.720001, y: 10.5}
+  m_AnchoredPosition: {x: 25, y: 135}
   m_SizeDelta: {x: -0.83999634, y: -0.83999634}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1471126142
@@ -1405,27 +1410,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3059c7d2361ed8445af9239989ca83dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Monster: {fileID: 147506, guid: 596b61cf1b8c1624ea0e15e15125de60, type: 2}
-  spawnSpot1: {fileID: 545104379}
-  spawnSpot2: {fileID: 918630170}
-  spawnSpot3: {fileID: 420015183}
-  spawnSpot4: {fileID: 394133615}
-  spawnSpot5: {fileID: 1471126140}
-  timeDecreaseCoeficient: 0.1
-  countAliveMonsters: 0
-  isHealerOnAMap: 0
-  healersMonstersCount: 0
-  isArmorBufferOnAMap: 0
-  ClickStrengthCorrective: 1
-  HealersList: []
-  UsedMonstersList: []
-  BasicMonster: {fileID: 340387407}
-  _monsterHitbox: {fileID: 6134648, guid: 596b61cf1b8c1624ea0e15e15125de60, type: 2}
-  BufferMonster: {fileID: 0}
-  spelCastMonster: {fileID: 0}
-  CreatedMonster1: {fileID: 0}
-  CreatedMonster2: {fileID: 0}
-  CreatedMonster3: {fileID: 0}
+  monsters:
+  - {fileID: 147506, guid: 596b61cf1b8c1624ea0e15e15125de60, type: 2}
+  spawnPoints:
+  - {fileID: 545104379}
+  - {fileID: 918630170}
+  - {fileID: 420015183}
+  - {fileID: 394133615}
+  - {fileID: 1471126140}
+  amountToBuffer: 08000000
+  defaultBufferAmount: 5
+  canGrow: 0
+  onMapMonsters: []
   _scoreCounter: 0
   _scoreText: {fileID: 1078739449}
   _topScoreText: {fileID: 1302757483}
@@ -1548,6 +1544,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1859180595}
   - component: {fileID: 1859180596}
+  - component: {fileID: 1859180597}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -1582,18 +1579,18 @@ MonoBehaviour:
   _healthTimeBar: {fileID: 1691695123}
   _timeIsOut: {fileID: 1779612669}
   _retryButton: {fileID: 1121766432}
-  MonsterReadyToBeHealed_E:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  MonsterWasKilled_E:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-  standartTimeDecreaseCoeficient: 0.1
-  TimeIsOutLetsEndThisGame: 0
+--- !u!114 &1859180597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1859180594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f4d723fccd5ad4396be267647dfe7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerStop: 1
 --- !u!1 &1949119581 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1613172071404194, guid: 795f9c38edb08d047a4aede5d118c80c,

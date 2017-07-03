@@ -41,11 +41,14 @@ public static class BigMom
     public static DBkey DBkey;
 
     public static DataBaseFunc DBF;
-    
-    // public static UpdateValueDB UVDB;
+
+    public static tempStats TS;
+
+    public static Govnokod_ProgressBar GKPB;
 
     public static void Init()
     {
+        GKPB = GameObject.FindObjectOfType<Govnokod_ProgressBar>();
         BackUIScript = GameObject.FindObjectOfType<Back>();
         HM = GameObject.FindObjectOfType<HealingMonster>();
         MBC = GameObject.FindObjectOfType<MonstersBasicClass>();
@@ -57,7 +60,7 @@ public static class BigMom
         PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
         DBkey = GameObject.FindObjectOfType<DBkey>();
         DBF = GameObject.FindObjectOfType<DataBaseFunc>();
-        // UVDB = GameObject.FindObjectOfType<UpdateValueDB>();
+        TS =  GameObject.FindObjectOfType<tempStats>();
     }
 
 }

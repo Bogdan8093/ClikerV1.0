@@ -65,10 +65,10 @@ public class PlayerSpells : MonoBehaviour
     {
         yield return new WaitForSeconds(durationSlowPunch);
         slowPunchEffect.SetActive(false);
-        if (clicker >= 20)
-            BigMom.ENC.setAllMonstersHP(0.0f);
+        /*if (clicker >= 20)
+           // BigMom.ENC.setAllMonstersHP(0.0f);
         else
-            BigMom.ENC.setAllMonstersHP(0.5f);
+            //BigMom.ENC.setAllMonstersHP(0.5f);*/
         clicker = 0f;
         spelled = false;
         CancelInvoke();

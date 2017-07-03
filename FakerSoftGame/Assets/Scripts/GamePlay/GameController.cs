@@ -8,7 +8,8 @@ using UnityEngine.Events;
 /*
 Здесь основніе состояния игры, такие как начало игры конец игры, и контроль времени на уровень
     */
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
     private Vector2 _oldValueOfHealthBar;
 
@@ -21,47 +22,44 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     private GameObject _retryButton;
 
-
-    [HideInInspector]
-    public UnityEvent MonsterReadyToBeHealed_E;
-
-    [HideInInspector]
-    public UnityEvent MonsterWasKilled_E;
-
-    
-
-    public float standartTimeDecreaseCoeficient = 0.1f;
-
-    public bool TimeIsOutLetsEndThisGame = false;
-
     void Start()
     {
         _oldValueOfHealthBar = _healthTimeBar.sizeDelta;
-        InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
+        GameTimer.current.setStartTimerValue(30.0f);
+        BigMom.ENC.SpawnMonsters();
+        GameTimer.current.timerStop = false;
+    }
+    void Update()
+    {
+        if (BigMom.ENC.isAllMonstersOnMapDead())
+        {
+            BigMom.ENC.SpawnMonsters();
+        }
+        if (BigMom.ENC.isWaveEnd())
+        {
+            Debug.Log("All dead");
+        }
+        HealthBarDecrease(GameTimer.current.getTimerValue());
     }
 
-    
 
-    private void TimeDecrease()
+    private void HealthBarDecrease(float value)
     {
-       // Debug.Log(BigMom.ENC.timeDecreaseCoeficient.ToString());
-      //  timeDecreaseCoeficient = 5.0f;
-        _healthTimeBar.sizeDelta = new Vector2(_healthTimeBar.sizeDelta.x - BigMom.PP.CalculateTimeDecrease(), _healthTimeBar.sizeDelta.y);
+        _healthTimeBar.sizeDelta = new Vector2(Mathf.Abs((100.0f*value)/30.0f), _healthTimeBar.sizeDelta.y);
         EndGame();
     }
 
     public void StartGame()
     {
-        BigMom.ENC.DestroyAllMobs();
+        //BigMom.ENC.DestroyAllMobs();
         _healthTimeBar.sizeDelta = _oldValueOfHealthBar;
         BigMom.ENC._scoreCounter = 0;
         BigMom.ENC.UpdateScore();
         InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
-        BigMom.ENC.SpawnMonstersAfterDeath();
         BigMom.PS.RefreshSpellColdown();
     }
 
@@ -70,12 +68,9 @@ public class GameController : MonoBehaviour {
     {
         if (_healthTimeBar.sizeDelta.x <= 0)
         {
-            CancelInvoke("TimeDecrease");
-
-            TimeIsOutLetsEndThisGame = true;
             _timeIsOut.SetActive(true);
-            _retryButton.SetActive(true);          
+            _retryButton.SetActive(true);
         }
     }
-	
+
 }

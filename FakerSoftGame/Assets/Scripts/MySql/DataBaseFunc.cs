@@ -6,7 +6,6 @@ public class DataBaseFunc : MonoBehaviour {
     public int ID, PT, STR, AGI, INT, STA, EXP, LVL, CC, CD;
     public string Plogin, Ppass, Pmail;
     public bool readyCheck, needwait;
-    public int x;
     // В скрипте происходит всякая магия. Не лезь - убьет!
     void Awake () {
         secretKey = BigMom.DBkey.dbsecretkey;
@@ -23,7 +22,6 @@ public class DataBaseFunc : MonoBehaviour {
         } else {
             GetUserStats (1);
         }
-
     }
 
     // Получение полной инфы о юзвере
@@ -31,18 +29,17 @@ public class DataBaseFunc : MonoBehaviour {
     void GetUserInfo (int userID) {
         readyCheck = false;
         if (secretKey != null) {
-            WWWForm form = new WWWForm ();
-            form.AddField ("userID", userID);
-            form.AddField ("secretKey", secretKey);
-            WWW GetUserInfoWWW = new WWW ("http://s2s.ddns.net/db/GetUserInf.php", form);
-            StartCoroutine (GetUserInfoCall (GetUserInfoWWW));
-
+            StartCoroutine (GetUserInfoCall (userID));
         } else {
             Debug.Log ("Введи сначала переменные и заработаю");
         }
     }
-    IEnumerator GetUserInfoCall (WWW w) {
+    IEnumerator GetUserInfoCall (int userID) {
+        WWWForm form = new WWWForm ();
+        form.AddField ("userID", userID);
+        form.AddField ("secretKey", secretKey);
         yield return new WaitUntil (() => needwait == false);
+        WWW w = new WWW ("http://s2s.ddns.net/db/GetUserInf.php", form);
         yield return w;
         if (w.error == null) {
             if (w.text == "Недостаток данных") {
@@ -50,6 +47,9 @@ public class DataBaseFunc : MonoBehaviour {
             }
             if (w.text == "Username does not exist\n") {
                 Debug.Log ("Ну кароч такого юзверя тут нет");
+            }
+            if (w.text == "Введите коректный код или идите нахуй") {
+                Debug.Log ("Введите ключ от дб");
             } else {
                 string[] lines = new string[12];
                 lines = w.text.Split ('\n');
@@ -68,7 +68,6 @@ public class DataBaseFunc : MonoBehaviour {
                 CD = int.Parse (lines[12]);
                 yield return new WaitUntil (() => w.isDone);
                 readyCheck = true;
-                x++;
             }
         } else {
             Debug.Log ("ERROR: " + w.error + "\n");
@@ -80,7 +79,7 @@ public class DataBaseFunc : MonoBehaviour {
     void GetUserStats (int userID) {
         readyCheck = false;
         if (secretKey != null) {
-            
+
             StartCoroutine (GetUserStatsCall (userID));
         } else {
             Debug.Log ("Введи сначала переменные и заработаю");
@@ -91,8 +90,7 @@ public class DataBaseFunc : MonoBehaviour {
         form.AddField ("userID", userID);
         form.AddField ("secretKey", secretKey);
         yield return new WaitUntil (() => needwait == false);
-        WWW GetUserStatsWWW = new WWW ("http://s2s.ddns.net/db/GetUserStats.php", form);
-        WWW w = GetUserStatsWWW;
+        WWW w = new WWW ("http://s2s.ddns.net/db/GetUserStats.php", form);
         yield return new WaitUntil (() => w.isDone == true);
         yield return w;
         if (w.error == null) {
@@ -101,7 +99,7 @@ public class DataBaseFunc : MonoBehaviour {
             } else {
 
                 // lines = int.Parse(w.text).Split ('\n');
-                int[] lines = System.Array.ConvertAll<string, int>(w.text.Split ('\n'), new System.Converter<string, int> (int.Parse));
+                int[] lines = System.Array.ConvertAll<string, int> (w.text.Split ('\n'), new System.Converter<string, int> (int.Parse));
                 ID = lines[0];
                 STR = lines[1];
                 AGI = lines[2];
@@ -110,7 +108,6 @@ public class DataBaseFunc : MonoBehaviour {
                 PT = lines[5];
                 yield return new WaitUntil (() => w.isDone);
                 readyCheck = true;
-                x++;
                 // перелопатить масив для проверки
                 // foreach (string item in lines)
                 // {

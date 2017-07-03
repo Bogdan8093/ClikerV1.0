@@ -14,25 +14,38 @@ public class submitStat : MonoBehaviour, IPointerClickHandler {
         id = BigMom.DBF.ID;
         tableName = "users";
     }
-    public void Send () {
-        if (int.Parse (getPoints.text) != BigMom.DBF.PT) {
-            if (int.Parse (AGI.text) != BigMom.DBF.AGI) {
-                UpdateStat (AGI);
-            }
-            if (int.Parse (STR.text) != BigMom.DBF.STR) {
-                UpdateStat (STR);
-            }
-            if (int.Parse (STA.text) != BigMom.DBF.STA) {
-                UpdateStat (STA);
-            }
-            if (int.Parse (INT.text) != BigMom.DBF.INT) {
-                UpdateStat (INT);
-            }
-            // если задет хоть 1 параметр запрос данных с сервера заного
-            if (int.Parse (AGI.text) != BigMom.DBF.AGI || int.Parse (STR.text) != BigMom.DBF.STR || int.Parse (STA.text) != BigMom.DBF.STA || int.Parse (INT.text) != BigMom.DBF.INT) {
-                collumnName = "points";
-                BigMom.DBF.UpdateValueFunc (tableName, collumnName, getPoints.text, id);
+    IEnumerator Send () {
+        if (int.Parse (AGI.text) != BigMom.DBF.AGI || int.Parse (STR.text) != BigMom.DBF.STR || int.Parse (STA.text) != BigMom.DBF.STA || int.Parse (INT.text) != BigMom.DBF.INT) {
+            showLog.text = "Updating please wait";
+            if (int.Parse (getPoints.text) != BigMom.DBF.PT) {
+                if (int.Parse (AGI.text) != BigMom.DBF.AGI) {
+                    UpdateStat (AGI);
+                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                }
+                if (int.Parse (STR.text) != BigMom.DBF.STR) {
+                    UpdateStat (STR);
+                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                }
+                if (int.Parse (STA.text) != BigMom.DBF.STA) {
+                    UpdateStat (STA);
+                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                }
+                if (int.Parse (INT.text) != BigMom.DBF.INT) {
+                    UpdateStat (INT);
+                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                }
+                BigMom.DBF.UpdateValueFunc (tableName, "points", getPoints.text, id);
+                BigMom.DBF.externalStartStats ();
                 StatsUpdate ();
+                yield return new WaitUntil (() => BigMom.DBF.readyCheck == true);
+                getPoints.text = BigMom.DBF.PT.ToString ();
+                AGI.text = BigMom.DBF.AGI.ToString ();
+                STR.text = BigMom.DBF.STR.ToString ();
+                STA.text = BigMom.DBF.STA.ToString ();
+                INT.text = BigMom.DBF.INT.ToString ();
+                showLog.text = "Success!";
+                yield return new WaitForSeconds (2);
+                showLog.text = "";
             }
         } else {
             showLog.text = "Вы не распределили характеристики";
@@ -44,17 +57,20 @@ public class submitStat : MonoBehaviour, IPointerClickHandler {
 
     }
     void StatsUpdate () {
-        tempStats.STA = 0;
-        tempStats.STR = 0;
-        tempStats.AGI = 0;
-        tempStats.INT = 0;
+        BigMom.TS.STA = 0;
+        BigMom.TS.STR = 0;
+        BigMom.TS.AGI = 0;
+        BigMom.TS.INT = 0;
         AGI.color = Color.black;
         STR.color = Color.black;
         STA.color = Color.black;
         INT.color = Color.black;
-        BigMom.DBF.externalStartStats ();
     }
     void IPointerClickHandler.OnPointerClick (PointerEventData eventData) {
-        Send ();
+        if (showLog.text != "Updating please wait") {
+            StartCoroutine (Send ());
+        } else {
+            Debug.Log ("Сработала защита от постоянных кликов");
+        }
     }
 }
