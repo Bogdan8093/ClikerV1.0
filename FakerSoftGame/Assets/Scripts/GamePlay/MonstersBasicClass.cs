@@ -295,7 +295,7 @@ public class MonstersBasicClass : MonoBehaviour {
     }
 
 
-    public void catchMonstersAskAboutHeal(MonstersBasicClass current_monster)
+   /* public void catchMonstersAskAboutHeal(MonstersBasicClass current_monster)
     {
         //  Debug.Log("HEALLLLLLLLLLLLWHEREAREYOU");      
     //    if (!current_monster.AlreadyHealTarget) {
@@ -311,10 +311,10 @@ public class MonstersBasicClass : MonoBehaviour {
                 }
             }
       //  }
-    }
+    }*/
 
 
-    public void checkExistingMonsterTypesInGame()
+    /*public void checkExistingMonsterTypesInGame()
     {
      //   healersMonstersCount = 0;
         Debug.Log("Why Inwokes are not here???");
@@ -332,10 +332,10 @@ public class MonstersBasicClass : MonoBehaviour {
             
         }
     }
+    */
 
 
-
-
+/*
     public void ArmoredBuff(MonstersBasicClass curmonster)
     {
         
@@ -497,11 +497,11 @@ public class MonstersBasicClass : MonoBehaviour {
                 monstr.coldownMonster = BigMom.ENC.BufferMonster;
             }
             */
-            monstr.HealCastTime -= Time.deltaTime;
+         //   monstr.HealCastTime -= Time.deltaTime;
 
 
 
-            if (monstr.HealCastTime < 0f)
+        /*    if (monstr.HealCastTime < 0f)
             {
                 //  Debug.Log(monstr.coldownMonster.HealthPoints);
                 //  if (monstr.coldownMonster.ColdownMonsterDestroted == true)
@@ -527,6 +527,6 @@ public class MonstersBasicClass : MonoBehaviour {
         //  HealCastTimeCountdown();
         //  SpellColdown();
     }
-
+*/
   
 }
