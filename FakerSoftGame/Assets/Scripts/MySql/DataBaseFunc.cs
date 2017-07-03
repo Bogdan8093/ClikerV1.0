@@ -80,19 +80,20 @@ public class DataBaseFunc : MonoBehaviour {
     void GetUserStats (int userID) {
         readyCheck = false;
         if (secretKey != null) {
-            WWWForm form = new WWWForm ();
-            form.AddField ("userID", userID);
-            form.AddField ("secretKey", secretKey);
-            WWW GetUserStatsWWW = new WWW ("http://s2s.ddns.net/db/GetUserStats.php", form);
-            StartCoroutine (GetUserStatsCall (GetUserStatsWWW));
+            
+            StartCoroutine (GetUserStatsCall (userID));
         } else {
             Debug.Log ("Введи сначала переменные и заработаю");
         }
     }
-    IEnumerator GetUserStatsCall (WWW w) {
+    IEnumerator GetUserStatsCall (int userID) {
+        WWWForm form = new WWWForm ();
+        form.AddField ("userID", userID);
+        form.AddField ("secretKey", secretKey);
         yield return new WaitUntil (() => needwait == false);
-        yield return new WaitForSeconds(3);
-        Debug.Log(w.text);
+        WWW GetUserStatsWWW = new WWW ("http://s2s.ddns.net/db/GetUserStats.php", form);
+        WWW w = GetUserStatsWWW;
+        yield return new WaitUntil (() => w.isDone == true);
         yield return w;
         if (w.error == null) {
             if (w.text == "Username does not exist\n") {
@@ -107,7 +108,6 @@ public class DataBaseFunc : MonoBehaviour {
                 INT = lines[3];
                 STA = lines[4];
                 PT = lines[5];
-                Debug.Log(AGI);
                 yield return new WaitUntil (() => w.isDone);
                 readyCheck = true;
                 x++;
