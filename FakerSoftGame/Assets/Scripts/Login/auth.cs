@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 public class auth : MonoBehaviour 
 {
     public static string user = "", email = "";
+    public static int userID;
     private string password = "", rePass = "", message = "";
+    private string dbkey;
 
     private bool register = false;
-
+    void Start(){
+        dbkey = BigMom.DBkey.dbsecretkey;
+    }
     private void OnGUI()
     {
         if (message != "")
@@ -44,7 +48,8 @@ public class auth : MonoBehaviour
                         form.AddField("user", user);
                         form.AddField("email", email);
                         form.AddField("password", password);
-                        WWW w = new WWW("http://s2s.ddns.net/tdb/auth/register.php", form);
+                        form.AddField("dbkey", dbkey);
+                        WWW w = new WWW("http://s2s.ddns.net/db/register.php", form);
                         StartCoroutine(registerFunc(w));
                     }
                     else
@@ -74,7 +79,8 @@ public class auth : MonoBehaviour
                     WWWForm form = new WWWForm();
                     form.AddField("user", user);
                     form.AddField("password", password);
-                    WWW w = new WWW("http://s2s.ddns.net/tdb/auth/login.php", form);
+                    form.AddField("dbkey", dbkey);
+                    WWW w = new WWW("http://s2s.ddns.net/db/login.php", form);
                     StartCoroutine(login(w));
                 }
             }
@@ -91,9 +97,11 @@ public class auth : MonoBehaviour
         yield return w;
         if (w.error == null)
         {
-            if (w.text == "login-SUCCESS")
+            string[] lines = new string[1];
+            lines = w.text.Split ('\n');
+            userID = int.Parse(lines[1]);
+            if (lines[0] == "login-SUCCESS")
             {
-                BigMom.GU.GetUserInfo(user);
                 SceneManager.LoadScene("Tavern Scene", LoadSceneMode.Single);
             }
             else

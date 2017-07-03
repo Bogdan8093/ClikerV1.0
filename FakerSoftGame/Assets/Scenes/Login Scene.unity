@@ -117,7 +117,6 @@ GameObject:
   m_Component:
   - component: {fileID: 211453098}
   - component: {fileID: 211453097}
-  - component: {fileID: 211453100}
   - component: {fileID: 211453099}
   m_Layer: 0
   m_Name: init
@@ -151,29 +150,6 @@ Transform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &211453099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 211453096}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3c336f6598b4aa89252c13d2f14594, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Pid: 
-  Plogin: 
-  Ppass: 
-  Pmail: 
-  Pint: 
-  Psta: 
-  Pagi: 
-  Pstr: 
-  Pexp: 
-  Plvl: 
-  PCchance: 
-  PCdamage: 
---- !u!114 &211453100
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
