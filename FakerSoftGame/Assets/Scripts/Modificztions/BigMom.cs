@@ -40,9 +40,12 @@ public static class BigMom
 
     public static DBkey DBkey;
 
+    public static Govnokod_ProgressBar GKPB;
+
 
     public static void Init()
     {
+        GKPB = GameObject.FindObjectOfType<Govnokod_ProgressBar>();
         BackUIScript = GameObject.FindObjectOfType<Back>();
         HM = GameObject.FindObjectOfType<HealingMonster>();
         MBC = GameObject.FindObjectOfType<MonstersBasicClass>();
