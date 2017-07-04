@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d436d1f9c2d45ce9db1e359373d5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerUI: {fileID: 0}
+  PlayerUI: {fileID: 1858936926451068, guid: 6b6b3f309b8959747be1207c21123ed7, type: 2}
 --- !u!114 &114295173114732638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -659,6 +659,7 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212252572090308914
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -699,6 +700,7 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212347328059395114
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -739,6 +741,7 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212399051273957842
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -779,6 +782,7 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212528684632613136
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -819,6 +823,7 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
 --- !u!212 &212586802343356698
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -859,3 +864,4 @@ SpriteRenderer:
   m_Size: {x: 9.3, y: 5.39}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1

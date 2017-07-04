@@ -8,5 +8,6 @@ public class Player : MonoBehaviour {
     void OnMouseDown()
     {
         PlayerUI.SetActive(true);
+        this.transform.parent.gameObject.SetActive(false);
     }
 }

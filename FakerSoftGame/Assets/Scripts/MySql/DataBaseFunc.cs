@@ -11,16 +11,33 @@ public class DataBaseFunc : MonoBehaviour {
         secretKey = BigMom.DBkey.dbsecretkey;
         //Заглушка чтоб работало без логин сцены
         if (auth.userID != 0) {
-            GetUserInfo (auth.userID);
+            if (BigMom.DBkey.dbsecretkey != null) {
+                GetUserInfo (auth.userID);
+            } else {
+                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
+
+            }
         } else {
-            GetUserInfo (1);
+            if (BigMom.DBkey.dbsecretkey != null) {
+                GetUserInfo (1);
+            } else {
+                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
+            }
         }
     }
     public void externalStartStats () {
         if (auth.userID != 0) {
-            GetUserStats (auth.userID);
+            if (BigMom.DBkey.dbsecretkey != null) {
+                GetUserStats (auth.userID);
+            } else {
+                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
+            }
         } else {
-            GetUserStats (1);
+            if (BigMom.DBkey.dbsecretkey != null) {
+                GetUserStats (1);
+            } else {
+                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
+            }
         }
     }
 
