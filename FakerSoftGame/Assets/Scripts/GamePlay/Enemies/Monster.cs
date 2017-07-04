@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
-
+[System.Serializable]
 public class Monster
 {
     private float defaultHealthPoints = 10.0f;
@@ -28,7 +29,18 @@ public class Monster
     public float Armor;
     public float MagicResist;
 
+    public float maxHealthPoints;
+    public float maxDamage;
+    public float maxExperience;
+    public float maxGold;
+    public float maxDropChanse;
+    public float maxArmor;
+    public float maxMagicResist;
+
+
+
     public float Level = 1.0f;
+    public string monsterType = "";
 
     public Monster()
     {
@@ -94,6 +106,7 @@ public class Monster
             };
         }
     }
+
     public void setLevel(float Level)
     {
         this.Level = Level;
@@ -104,6 +117,15 @@ public class Monster
         DropChanse = defaultDropChance * CorrectionDropChanse * Level;
         Armor = defaultArmor * CorrectionArmor * Level;
         MagicResist = defaultMagicResist * CorrectionMagicResist * Level;
+
+        maxHealthPoints = HealthPoints;
+        maxDamage = Damage;
+        maxExperience = Experience;
+        maxGold = Gold;
+        maxDropChanse = DropChanse;
+        maxArmor = Armor;
+        maxMagicResist = MagicResist;
+
     }
 
     public bool isDead()

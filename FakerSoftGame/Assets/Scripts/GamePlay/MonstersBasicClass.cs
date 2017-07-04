@@ -288,12 +288,12 @@ public class MonstersBasicClass : MonoBehaviour {
     }
      * */
 
-
+/*
     public void FastTime()
     {
         BigMom.PP.timeDecreaseCoeficient = 0.35f;
     }
-
+    */
 
    /* public void catchMonstersAskAboutHeal(MonstersBasicClass current_monster)
     {

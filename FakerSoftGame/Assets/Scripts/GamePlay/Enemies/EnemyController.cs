@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.Events;
-
+using System;
 
 public class EnemyController : MonoBehaviour
 {
@@ -20,8 +20,6 @@ public class EnemyController : MonoBehaviour
     GameObject containerObject;					//A parent object for pooled objects to be nested under. Keeps the hierarchy clean
 
     public List<GameObject> onMapMonsters;
-
-
 
     public float _scoreCounter = 0;
     [SerializeField]
@@ -81,7 +79,7 @@ public class EnemyController : MonoBehaviour
         for (int i = 0; i < spawnPoints.Length; i++)
         {
             //Get a pooled explosion object
-            GameObject obj = current.GetObject(monsters[0]);
+            GameObject obj = current.GetObject(monsters[UnityEngine.Random.Range(0, monsters.Length)]);
             if (obj != null)
             {
                 //Set its position and rotation
@@ -95,6 +93,17 @@ public class EnemyController : MonoBehaviour
             }
 
         }
+        StartCoroutine(WaittoBuff(1.0f));
+    }
+
+    private IEnumerator WaittoBuff(float waitTime)
+    {
+        while (true)
+        {
+            BigMom.ENC.monsterBuff();
+            yield return new WaitForSeconds(waitTime);
+        }
+        
     }
 
     public GameObject GetObject(GameObject objectType)
@@ -213,5 +222,46 @@ public class EnemyController : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void monsterBuff()
+    {
+        for (int i = 0; i < onMapMonsters.Count; i++)
+        {
+            if (onMapMonsters[i].name.Contains("Healer"))
+            {
+                healAllMonsters(2.0f);
+               // Debug.Log("Buff");
+            }
+            if (onMapMonsters[i].name.Contains("TimeEater"))
+            {
+                GameTimer.current.timerSpeed = 2.0f;
+            }
+            else
+            {
+                GameTimer.current.timerSpeed = 1.0f;
+            }
+        }
+    }
+
+    public void healAllMonsters(float health)
+    {
+        for (int i = 0; i < onMapMonsters.Count; i++)
+        {
+            onMapMonsters[i].gameObject.GetComponent<MonsterClick>().currentMonster.HealthPoints += health;
+            //Debug.Log("Helaed");
+            if (onMapMonsters[i].GetComponent<MonsterClick>().currentMonster.HealthPoints > onMapMonsters[i].GetComponent<MonsterClick>().currentMonster.maxHealthPoints)
+            {
+                onMapMonsters[i].GetComponent<MonsterClick>().currentMonster.HealthPoints -= health;
+            }
+        }
+    }
+
+    public void setAllMonstersHP(float percentHP)
+    {
+        for (int i = 0; i < onMapMonsters.Count; i++)
+        {
+            onMapMonsters[i].gameObject.GetComponent<MonsterClick>().currentMonster.HealthPoints *=percentHP;
+        }
     }
 }

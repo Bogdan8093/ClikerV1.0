@@ -35,7 +35,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._power = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
      
     }
@@ -50,7 +50,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._agility = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
         
     }
@@ -65,7 +65,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._intellect = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
         
     }
@@ -80,7 +80,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) - 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._stamina = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
        
     }
@@ -95,7 +95,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._power = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
         
     }
@@ -110,7 +110,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._agility = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
    
     }
@@ -125,7 +125,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._intellect = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
             
         }
        
@@ -141,7 +141,7 @@ public class TestSkills : MonoBehaviour {
             int _integer = int.Parse(_countPointAbilities.text) + 1;
             _countPointAbilities.text = _integer.ToString();
             BigMom.PP._stamina = _integer;
-            BigMom.PP.CalulateParams();
+            BigMom.PP.CalculateParams();
         }
         
     }

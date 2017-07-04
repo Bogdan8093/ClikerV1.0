@@ -30,6 +30,7 @@ public class GameController : MonoBehaviour
         GameTimer.current.setStartTimerValue(30.0f);
         BigMom.ENC.SpawnMonsters();
         GameTimer.current.timerStop = false;
+        
     }
     void Update()
     {
@@ -37,6 +38,9 @@ public class GameController : MonoBehaviour
         {
             BigMom.ENC.SpawnMonsters();
         }
+
+        
+
         if (BigMom.ENC.isWaveEnd())
         {
             Debug.Log("All dead");
@@ -44,10 +48,11 @@ public class GameController : MonoBehaviour
         HealthBarDecrease(GameTimer.current.getTimerValue());
     }
 
+ 
 
     private void HealthBarDecrease(float value)
     {
-        _healthTimeBar.sizeDelta = new Vector2(Mathf.Abs((100.0f*value)/30.0f), _healthTimeBar.sizeDelta.y);
+        _healthTimeBar.sizeDelta = new Vector2(Mathf.Abs((100.0f * value) / 30.0f), _healthTimeBar.sizeDelta.y);
         EndGame();
     }
 
@@ -57,7 +62,6 @@ public class GameController : MonoBehaviour
         _healthTimeBar.sizeDelta = _oldValueOfHealthBar;
         BigMom.ENC._scoreCounter = 0;
         BigMom.ENC.UpdateScore();
-        InvokeRepeating("TimeDecrease", 0, 0.05f);
         _timeIsOut.SetActive(false);
         _retryButton.SetActive(false);
         BigMom.PS.RefreshSpellColdown();

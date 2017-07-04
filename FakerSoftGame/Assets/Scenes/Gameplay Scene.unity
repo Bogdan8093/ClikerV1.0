@@ -153,7 +153,7 @@ Prefab:
     - target: {fileID: 224036791235540094, guid: 795f9c38edb08d047a4aede5d118c80c,
         type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 224036791235540094, guid: 795f9c38edb08d047a4aede5d118c80c,
         type: 2}
@@ -233,6 +233,75 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.x
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685153816310038, guid: 795f9c38edb08d047a4aede5d118c80c, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224738724222177624, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224738724222177624, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 415
+      objectReference: {fileID: 0}
+    - target: {fileID: 224738724222177624, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224738724222177624, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 224188584366366160, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 224188584366366160, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 103
+      objectReference: {fileID: 0}
+    - target: {fileID: 224188584366366160, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224188584366366160, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 275
+      objectReference: {fileID: 0}
+    - target: {fileID: 224194055759845782, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 224194055759845782, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 224032466050869770, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -21.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114052950914032896, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1627821027}
+    - target: {fileID: 114052950914032896, guid: 795f9c38edb08d047a4aede5d118c80c,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: onRageSpellClick
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 795f9c38edb08d047a4aede5d118c80c, type: 2}
@@ -488,6 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DevUI: {fileID: 1367819357}
+  boostDamage: 1
   _ETKSAIcoef: {fileID: 899249856}
   _ETKInputLvlExecutioner: {fileID: 1479107684}
   _ETKInputLvlrush: {fileID: 283655234}
@@ -540,7 +610,6 @@ MonoBehaviour:
   _passiveLvlExecutioner: 0
   _passiveLvlrush: 0
   _passiveLvlmagicArmor: 0
-  timeDecreaseCoeficient: 0.1
   HitDecreaseCoefForSpell: 1
   _monsterHealth: 0
   _clickDamage: 0
@@ -1411,14 +1480,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsters:
-  - {fileID: 147506, guid: 596b61cf1b8c1624ea0e15e15125de60, type: 2}
+  - {fileID: 1417855007804784, guid: c2a9a62eb9f88124b893dd1d51d2ee45, type: 2}
+  - {fileID: 1754985165538428, guid: 0a0d580983cef2c4bb8da8fe0ab9daab, type: 2}
+  - {fileID: 1328562312095526, guid: dd2743fa37bf15842b8484916d331f88, type: 2}
+  - {fileID: 1919636139359432, guid: 0f666ea94ac583b4f89cd8f43f713bbc, type: 2}
   spawnPoints:
   - {fileID: 545104379}
   - {fileID: 918630170}
   - {fileID: 420015183}
   - {fileID: 394133615}
   - {fileID: 1471126140}
-  amountToBuffer: 08000000
+  amountToBuffer: 02000000020000000200000002000000
   defaultBufferAmount: 5
   canGrow: 0
   onMapMonsters: []
@@ -1591,6 +1663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerStop: 1
+  timerSpeed: 1
 --- !u!1 &1949119581 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1613172071404194, guid: 795f9c38edb08d047a4aede5d118c80c,

@@ -28,7 +28,7 @@ public static class BigMom
 
     public static EnemyController ENC;
 
-    public static UsualClickerController UCC;
+    public static MonsterClick UCC;
 
     public static GameController GC;
 
@@ -53,7 +53,7 @@ public static class BigMom
         HM = GameObject.FindObjectOfType<HealingMonster>();
         MBC = GameObject.FindObjectOfType<MonstersBasicClass>();
         ENC = GameObject.FindObjectOfType<EnemyController>();
-        UCC = GameObject.FindObjectOfType<UsualClickerController>();
+        UCC = GameObject.FindObjectOfType<MonsterClick>();
         GC = GameObject.FindObjectOfType<GameController>();
         PP = GameObject.FindObjectOfType<PlayerParametrs>();
         PS = GameObject.FindObjectOfType<PlayerSpells>();

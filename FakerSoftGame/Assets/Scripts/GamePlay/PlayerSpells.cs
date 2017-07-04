@@ -26,7 +26,7 @@ public class PlayerSpells : MonoBehaviour
 
     public void onRageSpellClick()
     {
-        BigMom.PP.HitDecreaseCoefForSpell = 10f;
+        BigMom.PP.boostDamage = 3.0f;
         rageSpell.SetActive(false);
         StartCoroutine(WaitForSpellColdownAndEnable(ColdownRageSpell));
         StartCoroutine(WaitForSpellDurationThenOffEffects());
@@ -47,7 +47,7 @@ public class PlayerSpells : MonoBehaviour
         StopCoroutine(WaitForSpellColdownAndEnable(ColdownRageSpell));
         StopCoroutine(WaitForSpellDurationThenOffEffects());
         rageSpell.SetActive(true);
-        BigMom.PP.HitDecreaseCoefForSpell = 1f;
+        BigMom.PP.boostDamage = 1.0f;
     }
 
     private IEnumerator WaitForSpellColdownAndEnable(float waitTime)
@@ -59,16 +59,16 @@ public class PlayerSpells : MonoBehaviour
     private IEnumerator WaitForSpellDurationThenOffEffects()
     {
         yield return new WaitForSeconds(durationRageSpell);
-        BigMom.PP.HitDecreaseCoefForSpell = 1f;
+        BigMom.PP.boostDamage = 1.0f;
     }
     private IEnumerator WaitForSlowPunchDone()
     {
         yield return new WaitForSeconds(durationSlowPunch);
         slowPunchEffect.SetActive(false);
-        /*if (clicker >= 20)
-           // BigMom.ENC.setAllMonstersHP(0.0f);
+        if (clicker >= 20)
+            BigMom.ENC.setAllMonstersHP(0.0f);
         else
-            //BigMom.ENC.setAllMonstersHP(0.5f);*/
+           BigMom.ENC.setAllMonstersHP(0.5f);
         clicker = 0f;
         spelled = false;
         CancelInvoke();

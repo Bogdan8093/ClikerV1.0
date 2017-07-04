@@ -3,14 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 public class PlayerParametrs : MonoBehaviour
 {
-    private float _monsterArmor = 0.1f;//10 percent
-    private float _monsterMagicresist = 10;
     public GameObject DevUI;
-    public void OpenHIde()
-    {
-        DevUI.SetActive(!DevUI.activeSelf);
+    public float boostDamage = 1.0f;
 
-    }
+
+
+
     public InputField _ETKSAIcoef, _ETKInputLvlExecutioner, _ETKInputLvlrush, _ETKInputLvlmagicArmor;
 
     public InputField _changInputLVLValue, _changInputClickDamage, _changInputCritChance, _changInputMultiplyCritPrower,
@@ -43,14 +41,11 @@ public class PlayerParametrs : MonoBehaviour
 
     public float _passiveLvlExecutioner, _passiveLvlrush, _passiveLvlmagicArmor;
 
-    [HideInInspector]
-    public float timeDecreaseCoeficient = 0.1f;
 
     [HideInInspector]
     public float HitDecreaseCoefForSpell = 1f;
 
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
-    private float _clickStrength;
 
     private float critChanse = 1.05f;
 
@@ -71,7 +66,7 @@ public class PlayerParametrs : MonoBehaviour
     void Start()
     {
 
-        CalulateParams();
+        CalculateParams();
 
         if (PlayerPrefs.HasKey("agility"))
             _agility = PlayerPrefs.GetInt("agility");
@@ -88,7 +83,12 @@ public class PlayerParametrs : MonoBehaviour
 
     }
 
-    public void CalulateParams()
+    public void OpenHIde()
+    {
+        DevUI.SetActive(!DevUI.activeSelf);
+
+    }
+    public void CalculateParams()
     {
         //params
         float _spendingStregth = 2 * _passiveLvlExecutioner;
@@ -146,12 +146,6 @@ public class PlayerParametrs : MonoBehaviour
         _ETKInputLvlrush.text = _passiveLvlrush.ToString();
         _ETKInputLvlmagicArmor.text = _passiveLvlmagicArmor.ToString();
 
-        // костылек против варнингов - лучше проходите мимо, этого просто нету
-        #region
-        float Crutch = 0;
-        Crutch = _finalMultiCritPowerCoef + Crutch + _finalMultiplierRollbackCoolDown + _clickCritcoef + _monsterDamage + _monsterExp + _monsterGold
-            + _monsterDropCoef + _monsterMagicresist + correctiveHitStrangth;
-        #endregion
     }
     public void EtcChanges()
     {
@@ -175,22 +169,17 @@ public class PlayerParametrs : MonoBehaviour
         _stamina = float.Parse(_basicInputStamina.text);
 
     }
-    public void setNormalTimeDecrease()
-    {
 
-        timeDecreaseCoeficient = 0.1f;
-    }
-
-    public float CalculateTimeDecrease()
-    {
-
-        return timeDecreaseCoeficient;
-    }
 
     public float CalculateHit(Monster monstr)
     {
-        float final_damage = _clickDamage - monstr.Armor;
-        return final_damage;
+        float finalDamage = _clickDamage - monstr.Armor;
+        finalDamage *= boostDamage;
+        if (finalDamage <= 0)
+        {
+            return 0.0f;
+        }
+        return finalDamage;
 
     }
 
