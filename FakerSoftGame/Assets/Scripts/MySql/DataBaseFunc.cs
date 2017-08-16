@@ -1,11 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DataBaseFunc : MonoBehaviour {
-    private string secretKey;
-    public int ID, PT, STR, AGI, INT, STA, EXP, LVL, CC, CD;
-    public string Plogin, Ppass, Pmail;
+    // private string secretKey = BigMom.DBkey.dbsecretkey;
+    public int ID, PT, STR, AGI, INT, STA, EXP, LVL;
+    public string Plogin, Ppass, Pmail, IP;
     public bool readyCheck, needwait;
+    public ItemLists[] item;
+    private string parseItems, secretKey, URL = "http://s2s.epac.to/api/";
+    private List<string> form = new List<string> ();
+
     // В скрипте происходит всякая магия. Не лезь - убьет!
     void Awake () {
         secretKey = BigMom.DBkey.dbsecretkey;
@@ -24,21 +30,13 @@ public class DataBaseFunc : MonoBehaviour {
                 Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
             }
         }
+         StartCoroutine (GetItemsCall ());
     }
-    public void externalStartStats () {
-        if (auth.userID != 0) {
-            if (BigMom.DBkey.dbsecretkey != null) {
-                GetUserStats (auth.userID);
-            } else {
-                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
-            }
-        } else {
-            if (BigMom.DBkey.dbsecretkey != null) {
-                GetUserStats (1);
-            } else {
-                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
-            }
-        }
+    public void externalGetStats () {
+        needwait = true;
+        readyCheck = false;
+        GetUserStats (ID);
+        // StartCoroutine (test ());
     }
 
     // Получение полной инфы о юзвере
@@ -51,89 +49,41 @@ public class DataBaseFunc : MonoBehaviour {
             Debug.Log ("Введи сначала переменные и заработаю");
         }
     }
-    IEnumerator GetUserInfoCall (int userID) {
-        WWWForm form = new WWWForm ();
-        form.AddField ("userID", userID);
-        form.AddField ("secretKey", secretKey);
-        yield return new WaitUntil (() => needwait == false);
-        WWW w = new WWW ("http://s2s.ddns.net/db/GetUserInf.php", form);
-        yield return w;
-        if (w.error == null) {
-            if (w.text == "Недостаток данных") {
-                Debug.Log ("Ну ты сначала то данных то дай");
-            }
-            if (w.text == "Username does not exist\n") {
-                Debug.Log ("Ну кароч такого юзверя тут нет");
-            }
-            if (w.text == "Введите коректный код или идите нахуй") {
-                Debug.Log ("Введите ключ от дб");
-            } else {
-                string[] lines = new string[12];
-                lines = w.text.Split ('\n');
-                ID = int.Parse (lines[0]);
-                Plogin = lines[1];
-                Ppass = lines[2];
-                Pmail = lines[3];
-                PT = int.Parse (lines[4]);
-                INT = int.Parse (lines[5]);
-                STA = int.Parse (lines[6]);
-                AGI = int.Parse (lines[7]);
-                STR = int.Parse (lines[8]);
-                EXP = int.Parse (lines[9]);
-                LVL = int.Parse (lines[10]);
-                CC = int.Parse (lines[11]);
-                CD = int.Parse (lines[12]);
-                yield return new WaitUntil (() => w.isDone);
-                readyCheck = true;
-            }
-        } else {
-            Debug.Log ("ERROR: " + w.error + "\n");
-        }
-    }
 
     // Получение конкретно статов
 
     void GetUserStats (int userID) {
-        readyCheck = false;
         if (secretKey != null) {
-
             StartCoroutine (GetUserStatsCall (userID));
         } else {
             Debug.Log ("Введи сначала переменные и заработаю");
         }
     }
+
     IEnumerator GetUserStatsCall (int userID) {
         WWWForm form = new WWWForm ();
         form.AddField ("userID", userID);
-        form.AddField ("secretKey", secretKey);
+        form.AddField ("secretKeyCode", secretKey);
         yield return new WaitUntil (() => needwait == false);
-        WWW w = new WWW ("http://s2s.ddns.net/db/GetUserStats.php", form);
+        WWW w = new WWW (URL + "GetUserStats", form);
         yield return new WaitUntil (() => w.isDone == true);
-        yield return w;
-        if (w.error == null) {
-            if (w.text == "Username does not exist\n") {
-                Debug.Log ("Ну кароч такого юзверя тут нет");
-            } else {
-
-                // lines = int.Parse(w.text).Split ('\n');
+        if (string.IsNullOrEmpty (w.error)) {
+            if (!(w.text == "Bad input")) {
                 int[] lines = System.Array.ConvertAll<string, int> (w.text.Split ('\n'), new System.Converter<string, int> (int.Parse));
-                ID = lines[0];
-                STR = lines[1];
-                AGI = lines[2];
-                INT = lines[3];
-                STA = lines[4];
-                PT = lines[5];
-                yield return new WaitUntil (() => w.isDone);
-                readyCheck = true;
-                // перелопатить масив для проверки
-                // foreach (string item in lines)
-                // {
-                //     Debug.Log(item + "\n");
-                // }
+                PT = lines[0];
+                AGI = lines[1];
+                INT = lines[2];
+                STA = lines[3];
+                STR = lines[4];
+                EXP = lines[5];
+                LVL = lines[6];
+            } else {
+                Debug.Log ("Кривой ввод");
             }
         } else {
             Debug.Log ("ERROR: " + w.error + "\n");
         }
+        readyCheck = true;
         // while (!w.isDone){
         // yield return new WaitForSeconds(0.1f);
         // }
@@ -141,40 +91,62 @@ public class DataBaseFunc : MonoBehaviour {
 
     //Заполнение 1го значения в базе
 
-    public void UpdateValueFunc (string table, string column, string changeValue, int ChangeableID) {
-        needwait = true;
-        if (secretKey != null) {
-            WWWForm form = new WWWForm ();
-            form.AddField ("table", table);
-            form.AddField ("column", column);
-            form.AddField ("changeValue", changeValue);
-            form.AddField ("changeID", ChangeableID);
-            form.AddField ("secretKey", secretKey);
-            WWW UpdateValueFuncWWW = new WWW ("http://s2s.ddns.net/db/UpdateValue.php", form);
-            // показать измения
-            // Debug.Log ("table = " + table + "\n column = " + column + "\n val = " + changeValue + "\n playerID = " + ChangeableID);
-            StartCoroutine (UpdateValueFuncCall (UpdateValueFuncWWW));
-        } else {
-            Debug.Log ("Секретного ключа немного нехватает");
-        }
-    }
-    IEnumerator UpdateValueFuncCall (WWW w) {
-
-        yield return w;
-        if (w.error == null) {
-            if (w.text == "Rows matched: 1  Changed: 1  Warnings: 0") {
-                // if (w.isDone) {
-                //     success = true;
-                // }
-                Debug.Log ("Значение перезаписаннo");
-            }
-            if (w.text == "Rows matched: 1  Changed: 0  Warnings: 0") {
-                Debug.Log ("Значение найденно но НЕизменна");
+    IEnumerator GetUserInfoCall (int userID) {
+        WWWForm form = new WWWForm ();
+        form.AddField ("userID", userID);
+        form.AddField ("secretKeyCode", secretKey);
+        WWW w = new WWW (URL + "GetUserInf", form);
+        yield return new WaitUntil (() => w.isDone == true);
+        if (string.IsNullOrEmpty (w.error)) {
+            if (w.text != "") {
+                // Debug.Log (w.text);
+                string[] lines = new string[12];
+                lines = w.text.Split ('\n');
+                ID = int.Parse (lines[0]);
+                Plogin = lines[1];
+                Ppass = lines[2];
+                Pmail = lines[3];
+                PT = int.Parse (lines[4]);
+                AGI = int.Parse (lines[5]);
+                INT = int.Parse (lines[6]);
+                STA = int.Parse (lines[7]);
+                STR = int.Parse (lines[8]);
+                EXP = int.Parse (lines[9]);
+                LVL = int.Parse (lines[10]);
+                IP = lines[11];
+                readyCheck = true;
             }
         } else {
             Debug.Log ("ERROR: " + w.error + "\n");
         }
-        yield return new WaitUntil (() => w.isDone);
+    }
+    public IEnumerator UpdateValue (WWWForm form, string addr) {
+        WWW w = new WWW (URL + addr, form);
+        yield return new WaitUntil (() => w.isDone == true);
+        if (string.IsNullOrEmpty (w.error) && !(w.text == "0")) {
+            // Debug.Log (w.text);
+        } else {
+            Debug.Log ("ERROR: " + w.error + "\n" + "Text" + w.text);
+        }
         needwait = false;
+    }
+    IEnumerator GetItemsCall () {
+        WWWForm form = new WWWForm ();
+        form.AddField ("secretKeyCode", secretKey);
+        WWW w = new WWW (URL + "GetItems", form);
+        yield return new WaitUntil (() => w.isDone == true);
+        if (string.IsNullOrEmpty (w.error)) {
+            parseItems = w.text;
+            parseItems = "{\"Items\":" + parseItems + "}";
+            item = JsonHelper.FromJson<ItemLists> (parseItems);
+            Debug.Log (item[0].name);
+        } else {
+            Debug.Log (w.error);
+        }
+    }
+    [Serializable]
+    public struct ItemLists {
+        public int id, cost, INT, STA, STR, AGI;
+        public string name, type, img, rare, boonus, description;
     }
 }

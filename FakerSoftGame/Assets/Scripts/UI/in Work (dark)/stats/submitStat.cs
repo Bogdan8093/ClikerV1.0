@@ -7,36 +7,36 @@ using UnityEngine.UI;
 public class submitStat : MonoBehaviour, IPointerClickHandler {
     public Text AGI, STR, STA, INT;
     public Text showLog, getPoints;
-    private string tableName, collumnName;
     private int id;
+    
+    // WWWForm form;
+    // public WWWForm form;
     IEnumerator Start () {
         yield return new WaitUntil (() => BigMom.DBF.readyCheck == true);
         id = BigMom.DBF.ID;
-        tableName = "users";
     }
     IEnumerator Send () {
         if (int.Parse (AGI.text) != BigMom.DBF.AGI || int.Parse (STR.text) != BigMom.DBF.STR || int.Parse (STA.text) != BigMom.DBF.STA || int.Parse (INT.text) != BigMom.DBF.INT) {
             showLog.text = "Updating please wait";
+            WWWForm form = new WWWForm();
             if (int.Parse (getPoints.text) != BigMom.DBF.PT) {
                 if (int.Parse (AGI.text) != BigMom.DBF.AGI) {
-                    UpdateStat (AGI);
-                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                    form.AddField ("AGI", BigMom.TS.AGI);
                 }
                 if (int.Parse (STR.text) != BigMom.DBF.STR) {
-                    UpdateStat (STR);
-                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                    form.AddField ("STR", BigMom.TS.STR);
                 }
                 if (int.Parse (STA.text) != BigMom.DBF.STA) {
-                    UpdateStat (STA);
-                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                    form.AddField ("STA", BigMom.TS.STA);
                 }
                 if (int.Parse (INT.text) != BigMom.DBF.INT) {
-                    UpdateStat (INT);
-                    yield return new WaitUntil (() => BigMom.DBF.needwait == false);
+                    form.AddField ("INT", BigMom.TS.INT);
                 }
-                BigMom.DBF.UpdateValueFunc (tableName, "points", getPoints.text, id);
-                BigMom.DBF.externalStartStats ();
+                form.AddField ("userID", id);
+                form.AddField ("secretKeyCode", BigMom.DBkey.dbsecretkey);
+                StartCoroutine(BigMom.DBF.UpdateValue (form, "UpdateStats"));
                 StatsUpdate ();
+                BigMom.DBF.externalGetStats ();
                 yield return new WaitUntil (() => BigMom.DBF.readyCheck == true);
                 getPoints.text = BigMom.DBF.PT.ToString ();
                 AGI.text = BigMom.DBF.AGI.ToString ();
@@ -50,11 +50,6 @@ public class submitStat : MonoBehaviour, IPointerClickHandler {
         } else {
             showLog.text = "Вы не распределили характеристики";
         }
-    }
-    void UpdateStat (Text stat) {
-        collumnName = stat.transform.parent.name.ToLower ();
-        BigMom.DBF.UpdateValueFunc (tableName, collumnName, stat.text, id);
-
     }
     void StatsUpdate () {
         BigMom.TS.STA = 0;
