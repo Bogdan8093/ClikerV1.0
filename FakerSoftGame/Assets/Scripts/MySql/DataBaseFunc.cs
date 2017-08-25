@@ -9,6 +9,7 @@ public class DataBaseFunc : MonoBehaviour {
     public string Plogin, Ppass, Pmail, IP;
     public bool readyCheck, needwait;
     public ItemLists[] item;
+    public WWW www;
     private string parseItems, secretKey, URL = "http://s2s.epac.to/api/";
     private List<string> form = new List<string> ();
 
@@ -18,49 +19,31 @@ public class DataBaseFunc : MonoBehaviour {
         //Заглушка чтоб работало без логин сцены
         if (auth.userID != 0) {
             if (BigMom.DBkey.dbsecretkey != null) {
-                GetUserInfo (auth.userID);
+                StartCoroutine (GetUserInf (auth.userID));
+                StartCoroutine (GetItemsCall ());
             } else {
                 Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
 
             }
         } else {
             if (BigMom.DBkey.dbsecretkey != null) {
-                GetUserInfo (1);
+                StartCoroutine (GetUserInf (1));
+                StartCoroutine (GetItemsCall ());
             } else {
                 Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
             }
         }
-         StartCoroutine (GetItemsCall ());
     }
     public void externalGetStats () {
-        needwait = true;
-        readyCheck = false;
-        GetUserStats (ID);
+        StartCoroutine (GetUserStats (ID));
         // StartCoroutine (test ());
-    }
-
-    // Получение полной инфы о юзвере
-
-    void GetUserInfo (int userID) {
-        readyCheck = false;
-        if (secretKey != null) {
-            StartCoroutine (GetUserInfoCall (userID));
-        } else {
-            Debug.Log ("Введи сначала переменные и заработаю");
-        }
     }
 
     // Получение конкретно статов
 
-    void GetUserStats (int userID) {
-        if (secretKey != null) {
-            StartCoroutine (GetUserStatsCall (userID));
-        } else {
-            Debug.Log ("Введи сначала переменные и заработаю");
-        }
-    }
-
-    IEnumerator GetUserStatsCall (int userID) {
+    IEnumerator GetUserStats (int userID) {
+        needwait = true;
+        readyCheck = false;
         WWWForm form = new WWWForm ();
         form.AddField ("userID", userID);
         form.AddField ("secretKeyCode", secretKey);
@@ -83,15 +66,16 @@ public class DataBaseFunc : MonoBehaviour {
         } else {
             Debug.Log ("ERROR: " + w.error + "\n");
         }
+        needwait = false;
         readyCheck = true;
         // while (!w.isDone){
         // yield return new WaitForSeconds(0.1f);
         // }
     }
 
-    //Заполнение 1го значения в базе
+    // Получение полной инфы о юзвере
 
-    IEnumerator GetUserInfoCall (int userID) {
+    IEnumerator GetUserInf (int userID) {
         WWWForm form = new WWWForm ();
         form.AddField ("userID", userID);
         form.AddField ("secretKeyCode", secretKey);
@@ -131,20 +115,21 @@ public class DataBaseFunc : MonoBehaviour {
         needwait = false;
     }
     IEnumerator GetItemsCall () {
-        WWWForm form = new WWWForm ();
-        form.AddField ("secretKeyCode", secretKey);
-        WWW w = new WWW (URL + "GetItems", form);
-        yield return new WaitUntil (() => w.isDone == true);
-        if (string.IsNullOrEmpty (w.error)) {
-            parseItems = w.text;
-            parseItems = "{\"Items\":" + parseItems + "}";
-            item = JsonHelper.FromJson<ItemLists> (parseItems);
-            Debug.Log (item[0].name);
-        } else {
-            Debug.Log (w.error);
+            WWWForm form = new WWWForm ();
+            form.AddField ("secretKeyCode", secretKey);
+            www = new WWW (URL + "GetItems", form);
+            yield return new WaitUntil (() => www.isDone == true);
+            if (string.IsNullOrEmpty (www.error)) {
+                parseItems = www.text;
+                parseItems = "{\"Items\":" + parseItems + "}";
+                item = JsonHelper.FromJson<ItemLists> (parseItems);
+                Debug.Log (item[0].name);
+
+            } else {
+                Debug.Log (www.error);
+            }
         }
-    }
-    [Serializable]
+        [Serializable]
     public struct ItemLists {
         public int id, cost, INT, STA, STR, AGI;
         public string name, type, img, rare, boonus, description;
