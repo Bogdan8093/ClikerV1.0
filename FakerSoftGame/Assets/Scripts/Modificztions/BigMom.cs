@@ -38,7 +38,7 @@ public static class BigMom
     
     public static PlayerSkillPoints PSP;
 
-    public static DBkey DBkey;
+    public static GlobalServerValues GSV;
 
     public static DataBaseFunc DBF;
 
@@ -58,7 +58,7 @@ public static class BigMom
         PP = GameObject.FindObjectOfType<PlayerParametrs>();
         PS = GameObject.FindObjectOfType<PlayerSpells>();
         PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
-        DBkey = GameObject.FindObjectOfType<DBkey>();
+        GSV = GameObject.FindObjectOfType<GlobalServerValues>();
         DBF = GameObject.FindObjectOfType<DataBaseFunc>();
         TS =  GameObject.FindObjectOfType<tempStats>();
     }

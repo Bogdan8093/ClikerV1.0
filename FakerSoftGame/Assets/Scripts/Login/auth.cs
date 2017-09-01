@@ -11,7 +11,7 @@ public class auth : MonoBehaviour
 
     private bool register = false;
     void Start(){
-        dbkey = BigMom.DBkey.dbsecretkey;
+        dbkey = BigMom.GSV.DBKey;
     }
     private void OnGUI()
     {

@@ -14,9 +14,9 @@ public class serverStatus : MonoBehaviour {
         while (true) {
             w = new WWW (URL + "serverStatus");
             yield return new WaitUntil (() => w.isDone == true);
-            if (w.text == "1") {
+            if (string.IsNullOrEmpty(w.error) || !string.IsNullOrEmpty(w.text)) {
                 status.color = Color.green;
-                break;
+                yield return new WaitForSeconds (7.5f);
             } else {
                 yield return new WaitForSeconds (2.5f);
             }

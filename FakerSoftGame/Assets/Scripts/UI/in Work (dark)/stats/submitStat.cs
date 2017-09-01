@@ -33,7 +33,6 @@ public class submitStat : MonoBehaviour, IPointerClickHandler {
                     form.AddField ("INT", BigMom.TS.INT);
                 }
                 form.AddField ("userID", id);
-                form.AddField ("secretKeyCode", BigMom.DBkey.dbsecretkey);
                 StartCoroutine(BigMom.DBF.UpdateValue (form, "UpdateStats"));
                 StatsUpdate ();
                 BigMom.DBF.externalGetStats ();

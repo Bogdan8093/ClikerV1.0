@@ -10,28 +10,23 @@ public class DataBaseFunc : MonoBehaviour {
     public bool readyCheck, needwait;
     public ItemLists[] item;
     public WWW www;
-    private string parseItems, secretKey, URL = "http://s2s.epac.to/api/";
+    private string parseItems, secretKey, URL;
     private List<string> form = new List<string> ();
 
     // В скрипте происходит всякая магия. Не лезь - убьет!
     void Awake () {
-        secretKey = BigMom.DBkey.dbsecretkey;
+        secretKey = BigMom.GSV.DBKey;
+        URL = BigMom.GSV.URL;
         //Заглушка чтоб работало без логин сцены
-        if (auth.userID != 0) {
-            if (BigMom.DBkey.dbsecretkey != null) {
+        if (BigMom.GSV.DBKey != null) {
+            if (auth.userID != 0) {
                 StartCoroutine (GetUserInf (auth.userID));
-                StartCoroutine (GetItemsCall ());
             } else {
-                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
-
-            }
-        } else {
-            if (BigMom.DBkey.dbsecretkey != null) {
                 StartCoroutine (GetUserInf (1));
-                StartCoroutine (GetItemsCall ());
-            } else {
-                Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
             }
+            StartCoroutine (GetItemsCall ());
+        } else {
+            Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
         }
     }
     public void externalGetStats () {
@@ -53,13 +48,14 @@ public class DataBaseFunc : MonoBehaviour {
         if (string.IsNullOrEmpty (w.error)) {
             if (!(w.text == "Bad input")) {
                 int[] lines = System.Array.ConvertAll<string, int> (w.text.Split ('\n'), new System.Converter<string, int> (int.Parse));
-                PT = lines[0];
-                AGI = lines[1];
-                INT = lines[2];
-                STA = lines[3];
-                STR = lines[4];
-                EXP = lines[5];
-                LVL = lines[6];
+                ID  = lines[0];
+                PT  = lines[1];
+                AGI = lines[2];
+                INT = lines[3];
+                STA = lines[4];
+                STR = lines[5];
+                EXP = lines[6];
+                LVL = lines[7];
             } else {
                 Debug.Log ("Кривой ввод");
             }
@@ -82,29 +78,28 @@ public class DataBaseFunc : MonoBehaviour {
         WWW w = new WWW (URL + "GetUserInf", form);
         yield return new WaitUntil (() => w.isDone == true);
         if (string.IsNullOrEmpty (w.error)) {
-            if (w.text != "") {
-                // Debug.Log (w.text);
-                string[] lines = new string[12];
-                lines = w.text.Split ('\n');
-                ID = int.Parse (lines[0]);
-                Plogin = lines[1];
-                Ppass = lines[2];
-                Pmail = lines[3];
-                PT = int.Parse (lines[4]);
-                AGI = int.Parse (lines[5]);
-                INT = int.Parse (lines[6]);
-                STA = int.Parse (lines[7]);
-                STR = int.Parse (lines[8]);
-                EXP = int.Parse (lines[9]);
-                LVL = int.Parse (lines[10]);
-                IP = lines[11];
-                readyCheck = true;
-            }
+            // Debug.Log (w.text);
+            string[] lines = new string[14];
+            lines = w.text.Split ('\n');
+            ID = int.Parse (lines[0]);
+            Plogin = lines[1];
+            Ppass = lines[2];
+            Pmail = lines[3];
+            PT = int.Parse (lines[4]);
+            AGI = int.Parse (lines[5]);
+            INT = int.Parse (lines[6]);
+            STA = int.Parse (lines[7]);
+            STR = int.Parse (lines[8]);
+            EXP = int.Parse (lines[9]);
+            LVL = int.Parse (lines[10]);
+            IP = lines[11];
+            readyCheck = true;
         } else {
             Debug.Log ("ERROR: " + w.error + "\n");
         }
     }
     public IEnumerator UpdateValue (WWWForm form, string addr) {
+        form.AddField ("secretKeyCode", secretKey);
         WWW w = new WWW (URL + addr, form);
         yield return new WaitUntil (() => w.isDone == true);
         if (string.IsNullOrEmpty (w.error) && !(w.text == "0")) {
