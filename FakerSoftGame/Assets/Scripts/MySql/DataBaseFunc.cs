@@ -12,15 +12,16 @@ public class DataBaseFunc : MonoBehaviour {
     public WWW www;
     private string parseItems, secretKey, URL;
     private List<string> form = new List<string> ();
-
     // В скрипте происходит всякая магия. Не лезь - убьет!
+
     void Awake () {
         secretKey = BigMom.GSV.DBKey;
         URL = BigMom.GSV.URL;
         //Заглушка чтоб работало без логин сцены
+
         if (BigMom.GSV.DBKey != null) {
-            if (auth.userID != 0) {
-                StartCoroutine (GetUserInf (auth.userID));
+            if (BigMom.GSV.UserID != 0) {
+                StartCoroutine (GetUserInf (BigMom.GSV.UserID));
             } else {
                 StartCoroutine (GetUserInf (1));
             }
@@ -29,11 +30,10 @@ public class DataBaseFunc : MonoBehaviour {
             Debug.Log ("Отсутствует файл ключа!\nДБ работать не будет");
         }
     }
+
     public void externalGetStats () {
         StartCoroutine (GetUserStats (ID));
-        // StartCoroutine (test ());
     }
-
     // Получение конкретно статов
 
     IEnumerator GetUserStats (int userID) {
@@ -48,8 +48,8 @@ public class DataBaseFunc : MonoBehaviour {
         if (string.IsNullOrEmpty (w.error)) {
             if (!(w.text == "Bad input")) {
                 int[] lines = System.Array.ConvertAll<string, int> (w.text.Split ('\n'), new System.Converter<string, int> (int.Parse));
-                ID  = lines[0];
-                PT  = lines[1];
+                ID = lines[0];
+                PT = lines[1];
                 AGI = lines[2];
                 INT = lines[3];
                 STA = lines[4];
@@ -118,8 +118,6 @@ public class DataBaseFunc : MonoBehaviour {
                 parseItems = www.text;
                 parseItems = "{\"Items\":" + parseItems + "}";
                 item = JsonHelper.FromJson<ItemLists> (parseItems);
-                Debug.Log (item[0].name);
-
             } else {
                 Debug.Log (www.error);
             }

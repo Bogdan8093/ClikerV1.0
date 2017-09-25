@@ -16,6 +16,7 @@ public class GlobalServerValues : MonoBehaviour {
         if (System.IO.File.Exists (path)) {
             DBKey = Sha1Sum (System.IO.File.ReadAllText (path));
         }
+        DontDestroyOnLoad(this);
     }
     private string Sha1Sum (string strToEncrypt) {
         UTF8Encoding ue = new UTF8Encoding ();

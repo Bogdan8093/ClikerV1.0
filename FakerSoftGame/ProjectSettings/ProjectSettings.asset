@@ -666,9 +666,9 @@ PlayerSettings:
     Unity_Ads: 0
   facebookSdkVersion: 7.9.1
   apiCompatibilityLevel: 2
-  cloudProjectId: 61e3fd30-ddd7-4531-a538-f8a635f82f2f
-  projectName: ClickTaskV_0.01
-  organizationId: bogdan8093
+  cloudProjectId: 
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
