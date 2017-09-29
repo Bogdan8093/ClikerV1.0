@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class logining : MonoBehaviour {
 
@@ -48,12 +48,14 @@ public class logining : MonoBehaviour {
                 }
                 EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
             } else {
+                // button[0].OnSubmit (null);
                 SelectedItemNumber = 0;
                 EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[0].gameObject);
             }
         }
     }
     public void Auth () {
+        Debug.Log (1);
         if (!string.IsNullOrEmpty (inputs[0].text) && !string.IsNullOrEmpty (inputs[1].text)) {
             if (!w8) {
                 StartCoroutine (AuthCall ());
@@ -75,7 +77,7 @@ public class logining : MonoBehaviour {
             int responce = int.Parse (w.text);
             if (responce > 0) {
                 BigMom.GSV.UserID = responce;
-                SceneManager.LoadScene("Tavern Scene", LoadSceneMode.Single);
+                SceneManager.LoadScene ("Tavern Scene", LoadSceneMode.Single);
             }
             if (responce == 0) {
                 TextOutput.text = "Wrong Pass";

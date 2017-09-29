@@ -24,7 +24,7 @@ public class registeration : MonoBehaviour {
     //  Private
     private string key, URL;
     private bool w8;
-    private int SelectedItemNumber;
+    private int SIN; // SelectedItemNumber
     private Sprite loadingSprite;
     // AIV
     AuthInputValidation AIV;
@@ -42,7 +42,7 @@ public class registeration : MonoBehaviour {
     }
     void OnEnable () {
         StartCoroutine (Forms ());
-        SelectedItemNumber = 0;
+        SIN = 0;
     }
     IEnumerator Forms () {
         yield return new WaitUntil (() => button[1] != null);
@@ -61,18 +61,52 @@ public class registeration : MonoBehaviour {
         if (Input.GetKeyDown (KeyCode.Tab)) {
             if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
                 if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
-                    SelectedItemNumber = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
+                    SIN = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
                 }
-                SelectedItemNumber++;
-                if (SelectedItemNumber >= Selectable.allSelectables.Count) {
-                    SelectedItemNumber = 0;
+                SIN++;
+                if (SIN >= Selectable.allSelectables.Count) {
+                    SIN = 0;
                 }
-                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
             } else {
-                SelectedItemNumber = 0;
-                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
+                // button[1].OnSubmit(null);
+                SIN = 0;
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
             }
         }
+        /* 
+        if (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)) {
+            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
+                // если в выбранном елементе инпутфилд
+                if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
+                    SIN = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
+                    // если следующий выбранный елемент имеет тип баттон
+                    if (Selectable.allSelectables[SIN + 1].GetType () == typeof (Button)) {
+                        // spriteState
+                        // button[0].transition.SpriteSwap;
+                        Debug.Log(EventSystem.current.currentInputModule);
+                        //  = button[0].spriteState.pressedSprite; 
+                        reg();
+                        // EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
+                    } else {
+                        SIN += 1;
+                        EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
+                    }
+                }
+            } else {
+                SIN = 0;
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
+            }
+        }
+        if (Input.GetKeyUp (KeyCode.KeypadEnter) || Input.GetKeyUp (KeyCode.Return)) {
+            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
+                if (Selectable.allSelectables[SIN + 1].GetType () == typeof (Button)) {
+                    // spriteState
+                    // button[0].image.color = Color.white;
+                }
+            }
+        }
+        // */
     }
     public IEnumerator LoginCheck (string login) {
         yield return new WaitUntil (() => w8 == false);
