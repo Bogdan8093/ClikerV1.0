@@ -15,53 +15,52 @@ public class logining : MonoBehaviour {
     // private
     private string key, URL;
     private bool w8;
-    private int SelectedItemNumber;
+    private int SIN;
+    private List<Selectable> selectableObj = new List<Selectable> ();
 
     void Awake () {
         key = BigMom.GSV.DBKey;
         URL = BigMom.GSV.URL;
+        for (int i = 0; i < 2; i++) {
+            selectableObj.Add (inputs[i]);
+            selectableObj.Add (button[i]);
+        }
     }
     void OnEnable () {
         StartCoroutine (Forms ());
-        SelectedItemNumber = 0;
+        SIN = 0;
     }
     IEnumerator Forms () {
-        yield return new WaitUntil (() => button[1] != null);
-        Selectable.allSelectables.Clear ();
-        Selectable.allSelectables.Add (inputs[0]);
-        Selectable.allSelectables.Add (inputs[1]);
-        Selectable.allSelectables.Add (button[0]);
-        Selectable.allSelectables.Add (button[1]);
+        yield return new WaitUntil (() => inputs[0] != null);
         if (!inputs[0].isFocused) {
             inputs[0].Select ();
         }
     }
-    private void Update () {
+    private void LateUpdate () {
         if (Input.GetKeyDown (KeyCode.Tab)) {
-            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
-                if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
-                    SelectedItemNumber = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
-                }
-                SelectedItemNumber++;
-                if (SelectedItemNumber >= Selectable.allSelectables.Count) {
-                    SelectedItemNumber = 0;
-                }
-                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
+            SIN++;
+            if (SIN >= selectableObj.Count) {
+                SIN = 0;
+            }
+            EventSystem.current.SetSelectedGameObject (selectableObj[SIN].gameObject);
+        }
+        if (EventSystem.current.currentSelectedGameObject != selectableObj[SIN].gameObject) {
+            if (selectableObj.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) == null) {
+                EventSystem.current.SetSelectedGameObject (selectableObj[SIN].gameObject);
             } else {
-                // button[0].OnSubmit (null);
-                SelectedItemNumber = 0;
-                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[0].gameObject);
+                SIN = selectableObj.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
             }
         }
     }
     public void Auth () {
-        Debug.Log (1);
         if (!string.IsNullOrEmpty (inputs[0].text) && !string.IsNullOrEmpty (inputs[1].text)) {
             if (!w8) {
                 StartCoroutine (AuthCall ());
             } else {
                 TextOutput.text = "Relax boy w8";
             }
+        }else{
+            TextOutput.text = "Enter login and password";
         }
     }
     IEnumerator AuthCall () {

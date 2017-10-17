@@ -26,8 +26,8 @@ public class registeration : MonoBehaviour {
     private bool w8;
     private int SIN; // SelectedItemNumber
     private Sprite loadingSprite;
-    private List<Selectable> selectableObj = new List<Selectable> ();
-    private Color[] buttonColors;
+
+    private List<Selectable> selectableObj;
     // AIV
     AuthInputValidation AIV;
 
@@ -39,73 +39,84 @@ public class registeration : MonoBehaviour {
         securityBox = Resources.LoadAll<Sprite> ("auth/checkBox/securityBox");
         for (int i = 0; i < inputs.Length; i++) {
             img[i] = inputs[i].GetComponentsInChildren<Image> ()[1];
-            selectableObj.Add (inputs[i]);
         }
         passImg = inputs[2].GetComponentsInChildren<Image> ()[2];
-        selectableObj.Add (button[0]);
-        selectableObj.Add (button[1]);
-        // buttonColors[0] = button[0].colors.normalColor;
-        // buttonColors[1] = button[0].colors.pressedColor;
     }
     void OnEnable () {
         StartCoroutine (Forms ());
         SIN = 0;
     }
     IEnumerator Forms () {
-        yield return new WaitUntil (() => inputs[0] != null);
+        yield return new WaitUntil (() => button[1] != null);
+        Selectable.allSelectables.Clear ();
+        Selectable.allSelectables.Add (inputs[0]);
+        Selectable.allSelectables.Add (inputs[1]);
+        Selectable.allSelectables.Add (inputs[2]);
+        Selectable.allSelectables.Add (inputs[3]);
+        Selectable.allSelectables.Add (button[0]);
+        Selectable.allSelectables.Add (button[1]);
         if (!inputs[0].isFocused) {
             inputs[0].Select ();
         }
     }
     // void test(Selectable dsa){}
-    void LateUpdate () {
+    private void Update () {
         if (Input.GetKeyDown (KeyCode.Tab)) {
-            SIN++;
-            if (SIN >= selectableObj.Count) {
+            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
+                if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
+                    SIN = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
+                }
+                SIN++;
+                if (SIN >= Selectable.allSelectables.Count) {
+                    SIN = 0;
+                }
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
+            } else {
+                // button[1].OnSubmit(null);
                 SIN = 0;
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
             }
-            EventSystem.current.SetSelectedGameObject (selectableObj[SIN].gameObject);
         }
         // /*
         if (Input.GetKeyDown (KeyCode.KeypadEnter) || Input.GetKeyDown (KeyCode.Return)) {
-            if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
-                // если следующий выбранный елемент имеет тип баттон
-                if (selectableObj[SIN + 1].GetType () == typeof (Button)) {
-                    // spriteState
-                    // button[0].image.color = Color.black;
-                    // Debug.Log(EventSystem.current.currentInputModule);
-                    reg ();
-                    // button[0]. = buttonColors[1];
-                    // EventSystem.current.SetSelectedGameObject (selectableObj[SelectedItemNumber].gameObject);
-                } else {
-                    SIN += 1;
-                    EventSystem.current.SetSelectedGameObject (selectableObj[SIN].gameObject);
+            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
+                // если в выбранном елементе инпутфилд
+                if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField> () != null) {
+                    SIN = Selectable.allSelectables.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
+                    // если следующий выбранный елемент имеет тип баттон
+                    if (Selectable.allSelectables[SIN + 1].GetType () == typeof (Button)) {
+                        // spriteState
+                        button[0].image.color = Color.black;
+                        // Debug.Log(EventSystem.current.currentInputModule);
+
+                        //  = button[0].spriteState.pressedSprite; 
+                        reg();
+                        // EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SelectedItemNumber].gameObject);
+                    } else {
+                        SIN += 1;
+                        EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
+                    }
                 }
+            } else {
+                SIN = 0;
+                EventSystem.current.SetSelectedGameObject (Selectable.allSelectables[SIN].gameObject);
             }
         }
-        //  */
-        // /* 
         if (Input.GetKeyUp (KeyCode.KeypadEnter) || Input.GetKeyUp (KeyCode.Return)) {
-            if (selectableObj[SIN + 1].GetType () == typeof (Button)) {
-                // spriteState
-                // button[0].image.color = Color.white;
-                EventSystem.current.SetSelectedGameObject (button[0].gameObject);
-                EventSystem.current.SetSelectedGameObject (inputs[3].gameObject);
+            if (Selectable.allSelectables.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) != null) {
+                if (Selectable.allSelectables[SIN + 1].GetType () == typeof (Button)) {
+                    // spriteState
+                    button[0].image.color = Color.white;
+                    EventSystem.current.SetSelectedGameObject (button[0].gameObject);
+                    EventSystem.current.SetSelectedGameObject (inputs[3].gameObject);
+                }
             }
         }
         // */
         if (Input.GetKeyDown (KeyCode.F1)) {
-            // inputs[0].OnSelect (null);
-            Debug.Log(button[0].colors.normalColor);
+            inputs[0].OnSelect (null);
         }
-        // нетрогай норм пашет )
-        if (EventSystem.current.currentSelectedGameObject != selectableObj[SIN].gameObject) {
-            if (selectableObj.Find (o => o.gameObject == EventSystem.current.currentSelectedGameObject) == null) {
-                EventSystem.current.SetSelectedGameObject (selectableObj[SIN].gameObject);
-            } else {
-                SIN = selectableObj.FindIndex (o => o.gameObject == EventSystem.current.currentSelectedGameObject);
-            }
-        }
+        // */
     }
     public IEnumerator LoginCheck (string login) {
         yield return new WaitUntil (() => w8 == false);
@@ -167,7 +178,6 @@ public class registeration : MonoBehaviour {
     IEnumerator Register () {
         TextOutput.text = "Connection please wait";
         yield return new WaitUntil (() => w8 == false);
-        togleFields (true);
         w8 = true;
         WWWForm form = new WWWForm ();
         form.AddField ("login", inputs[0].text);
@@ -191,7 +201,6 @@ public class registeration : MonoBehaviour {
             Debug.Log (w.error);
         }
         w8 = false;
-        togleFields (false);
     }
     public void reg () {
         if (!w8) {
@@ -208,24 +217,11 @@ public class registeration : MonoBehaviour {
             TextOutput.text = "Relax boy w8";
         }
     }
-    public void togleFields (bool action) {
-        switch (action) {
-            case false:
-                foreach (Selectable item in selectableObj) {
-                    item.interactable = true;
-                }
-                break;
-            case true:
-                foreach (Selectable item in selectableObj) {
-                    item.interactable = false;
-                }
-                break;
-        }
-    }
     public void ResetFields () {
-        foreach (InputField item in inputs) {
-            item.text = null;
-        }
+        inputs[0].text = null;
+        inputs[1].text = null;
+        inputs[2].text = null;
+        inputs[3].text = null;
         TextOutput.text = null;
     }
     IEnumerator loading (int InputField) {

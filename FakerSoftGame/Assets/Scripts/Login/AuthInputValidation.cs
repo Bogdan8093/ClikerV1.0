@@ -144,16 +144,20 @@ public class AuthInputValidation : MonoBehaviour {
             regFull.passImg.enabled = true;
         }
     }
-    public void ValidateRePass(){
+    public void ValidateRePass () {
         string pass = regFull.inputs[2].text;
         string repass = regFull.inputs[3].text;
-        if(pass == repass && pass.Length >=6 && pass.Length<25){
+        if (pass == repass && pass.Length >= 6 && pass.Length < 25) {
             output.text = null;
             regFull.img[3].sprite = regFull.checkBox[2];
             regFull.confirm[3] = true;
-        }else{
+        } else {
             output.text = "Passwords do not match";
-            regFull.img[3].sprite = regFull.checkBox[1];
+            if (string.IsNullOrEmpty (repass)) {
+                regFull.img[3].sprite = regFull.checkBox[0];
+            } else {
+                regFull.img[3].sprite = regFull.checkBox[1];
+            }
             regFull.confirm[3] = false;
         }
     }
