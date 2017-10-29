@@ -6,55 +6,54 @@ using UnityEngine.UI;
 public class plusminusStat : MonoBehaviour {
     public Text field, points;
     private int currentVal, currentPoints;
-
     public void Minus () {
         currentPoints = int.Parse (points.text);
         currentVal = int.Parse (field.text);
         if (this.transform.parent.name == "Agility") {
-            if (BigMom.TS.AGI > 0) {
-				BigMom.TS.AGI--;
+            if (BigMom.SUS.TmpStats[0] > 0) {
+                BigMom.SUS.TmpStats[0]--;
                 currentPoints++;
                 currentVal--;
                 field.text = currentVal.ToString ();
                 points.text = currentPoints.ToString ();
             }
-            if (BigMom.TS.AGI == 0) {
+            if (BigMom.SUS.TmpStats[0] == 0) {
                 field.color = Color.black;
             }
         }
         if (this.transform.parent.name == "Strength") {
-            if (BigMom.TS.STR > 0) {
-                BigMom.TS.STR--;
+            if (BigMom.SUS.TmpStats[3] > 0) {
+                BigMom.SUS.TmpStats[3]--;
                 currentPoints++;
                 currentVal--;
                 field.text = currentVal.ToString ();
                 points.text = currentPoints.ToString ();
             }
-            if (BigMom.TS.STR == 0) {
+            if (BigMom.SUS.TmpStats[3] == 0) {
                 field.color = Color.black;
             }
         }
         if (this.transform.parent.name == "Intellect") {
-            if (BigMom.TS.INT > 0) {
-				BigMom.TS.INT--;
+            if (BigMom.SUS.TmpStats[1] > 0) {
+                BigMom.SUS.TmpStats[1]--;
                 currentPoints++;
                 currentVal--;
                 field.text = currentVal.ToString ();
                 points.text = currentPoints.ToString ();
             }
-            if (BigMom.TS.INT == 0) {
+            if (BigMom.SUS.TmpStats[1] == 0) {
                 field.color = Color.black;
             }
         }
         if (this.transform.parent.name == "Stamina") {
-            if (BigMom.TS.STA > 0) {
-				BigMom.TS.STA--;
+            if (BigMom.SUS.TmpStats[2] > 0) {
+                BigMom.SUS.TmpStats[2]--;
                 currentPoints++;
                 currentVal--;
                 field.text = currentVal.ToString ();
                 points.text = currentPoints.ToString ();
             }
-            if (BigMom.TS.STA == 0) {
+            if (BigMom.SUS.TmpStats[2] == 0) {
                 field.color = Color.black;
             }
         }
@@ -66,16 +65,16 @@ public class plusminusStat : MonoBehaviour {
         if (currentPoints > 0) {
 
             if (this.transform.parent.name == "Agility") {
-                BigMom.TS.AGI++;
+                BigMom.SUS.TmpStats[0]++;
             }
             if (this.transform.parent.name == "Strength") {
-                BigMom.TS.STR++;
+                BigMom.SUS.TmpStats[3]++;
             }
             if (this.transform.parent.name == "Intellect") {
-                BigMom.TS.INT++;
+                BigMom.SUS.TmpStats[1]++;
             }
             if (this.transform.parent.name == "Stamina") {
-                BigMom.TS.STA++;
+                BigMom.SUS.TmpStats[2]++;
             }
             currentPoints--;
             currentVal++;
@@ -84,5 +83,9 @@ public class plusminusStat : MonoBehaviour {
             field.color = new Color (0, 0, 1, 1);
         }
 
+    }
+    void test(){
+
+        
     }
 }

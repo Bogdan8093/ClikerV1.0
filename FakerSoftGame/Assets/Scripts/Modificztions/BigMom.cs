@@ -42,9 +42,9 @@ public static class BigMom
 
     public static DataBaseFunc DBF;
 
-    public static tempStats TS;
-
     public static Govnokod_ProgressBar GKPB;
+    
+    public static StatsUiScript SUS;
 
     public static void Init()
     {
@@ -60,7 +60,7 @@ public static class BigMom
         PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
         GSV = GameObject.FindObjectOfType<GlobalServerValues>();
         DBF = GameObject.FindObjectOfType<DataBaseFunc>();
-        TS =  GameObject.FindObjectOfType<tempStats>();
+        SUS =  GameObject.FindObjectOfType<StatsUiScript>();
     }
 
 }

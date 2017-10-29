@@ -96,7 +96,7 @@ public class registeration : MonoBehaviour {
         // */
         if (Input.GetKeyDown (KeyCode.F1)) {
             // inputs[0].OnSelect (null);
-            Debug.Log(button[0].colors.normalColor);
+            Debug.Log (button[0].colors.normalColor);
         }
         // нетрогай норм пашет )
         if (EventSystem.current.currentSelectedGameObject != selectableObj[SIN].gameObject) {
@@ -166,8 +166,10 @@ public class registeration : MonoBehaviour {
     }
     IEnumerator Register () {
         TextOutput.text = "Connection please wait";
+        foreach (Selectable item in selectableObj) {
+            item.interactable = false;
+        }
         yield return new WaitUntil (() => w8 == false);
-        togleFields (true);
         w8 = true;
         WWWForm form = new WWWForm ();
         form.AddField ("login", inputs[0].text);
@@ -191,7 +193,9 @@ public class registeration : MonoBehaviour {
             Debug.Log (w.error);
         }
         w8 = false;
-        togleFields (false);
+        foreach (Selectable item in selectableObj) {
+            item.interactable = true;
+        }
     }
     public void reg () {
         if (!w8) {
@@ -206,20 +210,6 @@ public class registeration : MonoBehaviour {
             } else { EventSystem.current.SetSelectedGameObject (inputs[0].gameObject); }
         } else {
             TextOutput.text = "Relax boy w8";
-        }
-    }
-    public void togleFields (bool action) {
-        switch (action) {
-            case false:
-                foreach (Selectable item in selectableObj) {
-                    item.interactable = true;
-                }
-                break;
-            case true:
-                foreach (Selectable item in selectableObj) {
-                    item.interactable = false;
-                }
-                break;
         }
     }
     public void ResetFields () {
