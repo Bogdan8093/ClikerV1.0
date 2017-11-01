@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 222990960760052384}
   - component: {fileID: 114746031746292998}
   - component: {fileID: 114071134275593802}
-  - component: {fileID: 114694575974100360}
+  - component: {fileID: 114403051619810398}
   m_Layer: 0
   m_Name: AgilityPlus
   m_TagString: Untagged
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 222499268670509050}
   - component: {fileID: 114710551183709338}
   - component: {fileID: 114993570379078244}
-  - component: {fileID: 114004015914805150}
+  - component: {fileID: 114247252899649332}
   m_Layer: 0
   m_Name: StaminaPlus
   m_TagString: Untagged
@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 222405235192598670}
   - component: {fileID: 114499422685642278}
   - component: {fileID: 114301026561397548}
-  - component: {fileID: 114387425643337556}
+  - component: {fileID: 114935992482884638}
   m_Layer: 0
   m_Name: IntellectPlus
   m_TagString: Untagged
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 222324241644578668}
   - component: {fileID: 114434435486307542}
   - component: {fileID: 114242797033876748}
-  - component: {fileID: 114345522985761252}
+  - component: {fileID: 114524925151560500}
   m_Layer: 0
   m_Name: AgilityMinus
   m_TagString: Untagged
@@ -679,7 +679,7 @@ GameObject:
   - component: {fileID: 222814173665855726}
   - component: {fileID: 114772082846660164}
   - component: {fileID: 114466558014054336}
-  - component: {fileID: 114833288062891630}
+  - component: {fileID: 114182544732291890}
   m_Layer: 0
   m_Name: IntellectMinus
   m_TagString: Untagged
@@ -804,7 +804,7 @@ GameObject:
   - component: {fileID: 222883131426635950}
   - component: {fileID: 114214480120455580}
   - component: {fileID: 114774086434429416}
-  - component: {fileID: 114854088436114152}
+  - component: {fileID: 114492503968891948}
   m_Layer: 0
   m_Name: StrengthMinus
   m_TagString: Untagged
@@ -1059,7 +1059,7 @@ GameObject:
   - component: {fileID: 222142905638794098}
   - component: {fileID: 114491309493929884}
   - component: {fileID: 114729271406731932}
-  - component: {fileID: 114691135443009356}
+  - component: {fileID: 114104518641954250}
   m_Layer: 0
   m_Name: StrengthPlus
   m_TagString: Untagged
@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 222569281105316662}
   - component: {fileID: 114119565217870090}
   - component: {fileID: 114576608437167104}
-  - component: {fileID: 114243315671905690}
+  - component: {fileID: 114369184105986426}
   m_Layer: 0
   m_Name: StaminaMinus
   m_TagString: Untagged
@@ -1623,19 +1623,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Stamina:'
---- !u!114 &114004015914805150
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1116199908237874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114977795380624082}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114006267328578800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1979,18 +1966,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114746031746292998}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114694575974100360}
-        m_MethodName: Plus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114088318326056666
@@ -2006,6 +1982,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slots: {fileID: 224170524497167662}
   inventoryText: {fileID: 114602204578263754}
+--- !u!114 &114104518641954250
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1663337440200212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114111947193140544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2328,6 +2315,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: X
+--- !u!114 &114182544732291890
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405638862183382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114185695816936206
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2622,33 +2620,20 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114434435486307542}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114345522985761252}
-        m_MethodName: Minus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114243315671905690
+--- !u!114 &114247252899649332
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1831816941142218}
+  m_GameObject: {fileID: 1116199908237874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 114977795380624082}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114248854105064472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2816,18 +2801,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114499422685642278}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114387425643337556}
-        m_MethodName: Plus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114306051816565300
@@ -2948,19 +2922,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 910a31349275e8c429c0ef6945b3e66d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114345522985761252
+--- !u!114 &114369184105986426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1354244080404258}
+  m_GameObject: {fileID: 1831816941142218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  field: {fileID: 114379084897852768}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114377529990603430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3107,19 +3079,6 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &114387425643337556
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1275098935014930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114915414921564384}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114390011595529540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3180,6 +3139,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Level:'
+--- !u!114 &114403051619810398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1076491212557210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114404622816580002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3387,18 +3357,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114772082846660164}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114833288062891630}
-        m_MethodName: Minus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114471409341856208
@@ -3555,6 +3514,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114492503968891948
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1513377816737560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114499422685642278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3615,6 +3585,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: +
+--- !u!114 &114524925151560500
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354244080404258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114531734785589614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3850,18 +3831,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114119565217870090}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114243315671905690}
-        m_MethodName: Minus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114593660208487094
@@ -4149,19 +4119,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
---- !u!114 &114691135443009356
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1663337440200212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114167175824435470}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114692642180537546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4195,19 +4152,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: X
---- !u!114 &114694575974100360
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1076491212557210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114379084897852768}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114710551183709338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4290,7 +4234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e28bae73f99409785007521e192f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TmpStats: 00000000000000000000000000000000
+  TmpStats: 0000000000000000000000000000000000000000
   StatFields:
   - {fileID: 114692642180537546}
   - {fileID: 114379084897852768}
@@ -4347,18 +4291,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114491309493929884}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114691135443009356}
-        m_MethodName: Plus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114733176330742810
@@ -4652,18 +4585,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114214480120455580}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114854088436114152}
-        m_MethodName: Minus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114776554493000246
@@ -4751,19 +4673,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114833288062891630
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1405638862183382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114915414921564384}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114836987868284526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4830,19 +4739,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
---- !u!114 &114854088436114152
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1513377816737560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3944ab22d5d748ed8c73929046cac2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 114167175824435470}
-  points: {fileID: 114692642180537546}
 --- !u!114 &114876785477122998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5055,6 +4951,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: X
+--- !u!114 &114935992482884638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275098935014930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0feaf10ea2adf4196b670f845b6d1557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114938585957762334
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5265,18 +5172,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114710551183709338}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114004015914805150}
-        m_MethodName: Plus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114994289673813152
