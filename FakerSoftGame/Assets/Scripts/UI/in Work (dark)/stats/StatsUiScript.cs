@@ -9,8 +9,7 @@ public class StatsUiScript : MonoBehaviour {
     // public Text[] stats = new Text[4];
     // public Text texts[5], getPoints;
     // private int[] statArr = new int[4];
-    // [HideInInspector]
-    public int[] TmpStats = new int[5];
+    private int[] TmpStats = new int[5];
     public Text[] StatFields = new Text[6];
     IEnumerator Start () {
         yield return new WaitUntil (() => BigMom.DBF.LVL != 0);

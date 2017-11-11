@@ -6,12 +6,10 @@ using UnityEngine.EventSystems;
 public class sendConfirm : MonoBehaviour, IPointerClickHandler {
     public StatsUiScript SUS;
     void IPointerClickHandler.OnPointerClick (PointerEventData eventData) {
-        if (SUS.TmpStats[0] > 0) {
-            if (SUS.StatFields[5].text != "Updating please wait") {
-                StartCoroutine (SUS.Send ());
-            } else {
-                Debug.Log ("Сработала защита от постоянных кликов");
-            }
+        if (SUS.StatFields[5].text != "Updating please wait") {
+            StartCoroutine (SUS.Send ());
+        } else {
+            Debug.Log ("Сработала защита от постоянных кликов");
         }
     }
 }
