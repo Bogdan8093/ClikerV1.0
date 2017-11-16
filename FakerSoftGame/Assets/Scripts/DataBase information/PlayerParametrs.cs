@@ -1,21 +1,15 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
-public class PlayerParametrs : MonoBehaviour
-{
+public class PlayerParametrs : MonoBehaviour {
     public GameObject DevUI;
     public float boostDamage = 1.0f;
-
-
-
 
     public InputField _ETKSAIcoef, _ETKInputLvlExecutioner, _ETKInputLvlrush, _ETKInputLvlmagicArmor;
 
     public InputField _changInputLVLValue, _changInputClickDamage, _changInputCritChance, _changInputMultiplyCritPrower,
-   _changInputMultiplySkillPower, _changInputMultiplyColdoun, _changInputResistCoef, _changInputFinalPower, _changInputFinalAgility,
-   _changInputFinalIntellect, _changInputFinalStamina;
-
-
+    _changInputMultiplySkillPower, _changInputMultiplyColdoun, _changInputResistCoef, _changInputFinalPower, _changInputFinalAgility,
+    _changInputFinalIntellect, _changInputFinalStamina;
 
     //[SerializeField]
     [HideInInspector]
@@ -23,16 +17,15 @@ public class PlayerParametrs : MonoBehaviour
 
     // [SerializeField]
 
-
     public InputField _basicInputClickDamage, _basicImputCritChance, _basicInputMultiplyCritPower, _basicInputMultiplyMagicPower,
-            _basicInputMultiplyClodoun, _basicInputResistCoef, _basicInputPower, _basicInputAgility, _basicInputIntellect, _basicInputStamina;
+    _basicInputMultiplyClodoun, _basicInputResistCoef, _basicInputPower, _basicInputAgility, _basicInputIntellect, _basicInputStamina;
     [SerializeField]
     public float LvL_Score;
     public float _basicClickDamage = 1.0f;
     public float _basicCritChance = 10.0f, _basicMultiplyCritPower = 1.5f, _basicMultiplyMagicPower = 1, _basicMultiplyColdoun = 1, _basicResistCoef = 0;
     //Game params
     [SerializeField]
-    private float _clotheStrength = 0, _clotheAgility = 0, _clotheIntellect = 0, _clotheStamina = 0, _clotheMultiplyCriticalPowerChance = 1.5f, _clotheMultiplyColdounCoef = 1;//Clothes prams
+    private float _clotheStrength = 0, _clotheAgility = 0, _clotheIntellect = 0, _clotheStamina = 0, _clotheMultiplyCriticalPowerChance = 1.5f, _clotheMultiplyColdounCoef = 1; //Clothes prams
 
     //  [SerializeField]
     public float _passiveModStrength = 1.0f, _passiveModAgility = 1, _passiveModintellect = 1, _passiveModStamina = 1, _passiveMultipyCritiPower = 1, _passiveMultiplyColdoun = 1;
@@ -41,16 +34,15 @@ public class PlayerParametrs : MonoBehaviour
 
     public float _passiveLvlExecutioner, _passiveLvlrush, _passiveLvlmagicArmor;
 
-
     [HideInInspector]
     public float HitDecreaseCoefForSpell = 1f;
 
     private const float BASE_HEALTH_DECREESE_COEFICIENT = 0.01f;
 
     private float critChanse = 1.05f;
-
+#pragma warning disable 0414
     private float correctiveHitStrangth = 1.0f;
-
+#pragma warning restore 0414
     [HideInInspector]
     public float _monsterHealth;
 
@@ -63,8 +55,7 @@ public class PlayerParametrs : MonoBehaviour
     [SerializeField]
     private float newPassiveSpending = 0;
     // calculated params
-    void Start()
-    {
+    void Start() {
 
         CalculateParams();
 
@@ -80,16 +71,13 @@ public class PlayerParametrs : MonoBehaviour
         if (PlayerPrefs.HasKey("stamina"))
             _stamina = PlayerPrefs.GetInt("stamina");
 
-
     }
 
-    public void OpenHIde()
-    {
+    public void OpenHIde() {
         DevUI.SetActive(!DevUI.activeSelf);
 
     }
-    public void CalculateParams()
-    {
+    public void CalculateParams() {
         //params
         float _spendingStregth = 2 * _passiveLvlExecutioner;
         float _spendingAgility = 2 * _passiveLvlrush;
@@ -97,14 +85,12 @@ public class PlayerParametrs : MonoBehaviour
         float _pointsSpendingPerPassive = _spendingStregth + _spendingAgility + _spendingIntellect + newPassiveSpending;
         float _koefB15 = (_power + _agility + _intellect + _stamina + _pointsSpendingPerPassive) / 4;
         float _heroLevel = 1.0f; /// 1 + ((_strength + _agility + _intellect + _stamina) - 40) / LvL_Score;
-        float _expForLevel = 100 * (_heroLevel * _heroLevel);       //
+        float _expForLevel = 100 * (_heroLevel * _heroLevel); //
         float _finalStatePower = (_power + _clotheStrength) * _passiveModStrength;
         float _finalStateAgility = (_agility + _clotheAgility) * _passiveModAgility;
         float _finalStateIntellect = (_intellect + _clotheIntellect) * _passiveModintellect;
         float _finalStateStamina = (_stamina + _clotheStamina) * _passiveModStamina;
-        float _finalMultiCritPowerCoef = (_clotheMultiplyCriticalPowerChance * _passiveMultipyCritiPower);
-        float _finalMultiplierRollbackCoolDown = (_passiveMultiplyColdoun * _clotheMultiplyColdounCoef);
-        float _clickCritcoef = 1 + (0.2f * _passiveLvlExecutioner);
+
         _clickDamage = _basicClickDamage + (_finalStatePower * _SAICoef);
         float _effectOnCritChance = 3 * _basicCritChance * _finalStateAgility;
         float _critChance = (_basicCritChance + (_finalStateAgility / (_koefB15 * _SAICoef))) + _effectOnCritChance;
@@ -114,11 +100,8 @@ public class PlayerParametrs : MonoBehaviour
         _resistCoef = _basicResistCoef + (_koefB15 / _finalStateStamina);
         //Monsters
         float _monsterDamageEffect = 1.0f - (_passiveLvlmagicArmor * 0.05f);
-        float _monsterDamage = ((1.0f + _expForLevel / 50.0f) / 2.0f) * _monsterDamageEffect;
+
         _monsterHealth = _koefB15 * _heroLevel * 1.5f;
-        float _monsterExp = (_monsterHealth + _expForLevel / (_koefB15 * _heroLevel)) / 15;
-        float _monsterGold = ((_monsterHealth + _expForLevel / (_heroLevel * _koefB15)) / 15) * _heroLevel;
-        float _monsterDropCoef = (_monsterHealth + _expForLevel / (_koefB15 * _heroLevel)) / 15;
         //InputFields
         _changInputLVLValue.text = _heroLevel.ToString();
         _changInputClickDamage.text = _clickDamage.ToString();
@@ -146,16 +129,23 @@ public class PlayerParametrs : MonoBehaviour
         _ETKInputLvlrush.text = _passiveLvlrush.ToString();
         _ETKInputLvlmagicArmor.text = _passiveLvlmagicArmor.ToString();
 
+#pragma warning disable 0219 // suppress value not used warning  
+        float _finalMultiCritPowerCoef = (_clotheMultiplyCriticalPowerChance * _passiveMultipyCritiPower);
+        float _finalMultiplierRollbackCoolDown = (_passiveMultiplyColdoun * _clotheMultiplyColdounCoef);
+        float _clickCritcoef = 1 + (0.2f * _passiveLvlExecutioner);
+        float _monsterExp = (_monsterHealth + _expForLevel / (_koefB15 * _heroLevel)) / 15;
+        float _monsterGold = ((_monsterHealth + _expForLevel / (_heroLevel * _koefB15)) / 15) * _heroLevel;
+        float _monsterDropCoef = (_monsterHealth + _expForLevel / (_koefB15 * _heroLevel)) / 15;
+        float _monsterDamage = ((1.0f + _expForLevel / 50.0f) / 2.0f) * _monsterDamageEffect;
+#pragma warning restore 0219 // restore value not used warning
     }
-    public void EtcChanges()
-    {
+    public void EtcChanges() {
         _SAICoef = float.Parse(_ETKSAIcoef.text);
         _passiveLvlExecutioner = float.Parse(_ETKInputLvlExecutioner.text);
         _passiveLvlmagicArmor = float.Parse(_ETKInputLvlmagicArmor.text);
         _passiveLvlrush = float.Parse(_ETKInputLvlrush.text);
     }
-    public void BasicParamsChanges()
-    {
+    public void BasicParamsChanges() {
 
         _basicClickDamage = float.Parse(_basicInputClickDamage.text);
         _basicCritChance = float.Parse(_basicImputCritChance.text);
@@ -170,21 +160,17 @@ public class PlayerParametrs : MonoBehaviour
 
     }
 
-
-    public float CalculateHit(Monster monstr)
-    {
+    public float CalculateHit(Monster monstr) {
         float finalDamage = _clickDamage - monstr.Armor;
         finalDamage *= boostDamage;
-        if (finalDamage <= 0)
-        {
+        if (finalDamage <= 0) {
             return 0.0f;
         }
         return finalDamage;
 
     }
 
-    private float CalculateCritChanse()
-    {
+    private float CalculateCritChanse() {
 
         if (Random.Range(1f, 100f) * critChanse > 99)
             return 4.0f;

@@ -1,29 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class JsonHelper : MonoBehaviour {
 
-    public static T[] FromJson<T> (string json) {
-        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>> (json);
+    public static T[] FromJson<T>(string json) {
+        Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(json);
         return wrapper.Items;
     }
 
-    public static string ToJson<T> (T[] array) {
-        Wrapper<T> wrapper = new Wrapper<T> ();
+    public static string ToJson<T>(T[] array) {
+        Wrapper<T> wrapper = new Wrapper<T>();
         wrapper.Items = array;
-        return JsonUtility.ToJson (wrapper);
+        return JsonUtility.ToJson(wrapper);
     }
 
-    public static string ToJson<T> (T[] array, bool prettyPrint) {
-        Wrapper<T> wrapper = new Wrapper<T> ();
+    public static string ToJson<T>(T[] array, bool prettyPrint) {
+        Wrapper<T> wrapper = new Wrapper<T>();
         wrapper.Items = array;
-        return JsonUtility.ToJson (wrapper, prettyPrint);
+        return JsonUtility.ToJson(wrapper, prettyPrint);
     }
 
     [Serializable]
     private class Wrapper<T> {
-        public T[] Items;
+            public T[] Items;
+        }
+        [Serializable]
+    public struct ItemLists {
+        public int id, cost, INT, STA, STR, AGI;
+        public string name, type, img, rare, boonus, description;
     }
 }
