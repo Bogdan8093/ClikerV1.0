@@ -35,8 +35,6 @@ public static class BigMom
     public static PlayerParametrs PP;
 
     public static PlayerSpells PS;
-    
-    public static PlayerSkillPoints PSP;
 
     public static GlobalServerValues GSV;
 
@@ -57,10 +55,8 @@ public static class BigMom
         GC = GameObject.FindObjectOfType<GameController>();
         PP = GameObject.FindObjectOfType<PlayerParametrs>();
         PS = GameObject.FindObjectOfType<PlayerSpells>();
-        PSP = GameObject.FindObjectOfType<PlayerSkillPoints>();
         GSV = GameObject.FindObjectOfType<GlobalServerValues>();
         DBF = GameObject.FindObjectOfType<DataBaseFunc>();
-        SUS =  GameObject.FindObjectOfType<StatsUiScript>();
     }
 
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using LitJson;
-using UnityEditor;
 using UnityEngine;
 public class DataBaseFunc : MonoBehaviour {
     // private string secretKey = BigMom.DBkey.dbsecretkey;
@@ -12,6 +12,7 @@ public class DataBaseFunc : MonoBehaviour {
     public JsonHelper.ItemLists[] items;
     public WWW www;
     private string parseItems, secretKey, URL;
+    public GlobalServerValues GSV;
     // private List<string> form = new List<string>();
     // private TextAsset dsa;
     // В скрипте происходит всякая магия. Не лезь - убьет!
@@ -28,23 +29,17 @@ public class DataBaseFunc : MonoBehaviour {
                 StartCoroutine(GetUserInf(1));
             }
             StartCoroutine(GetItemsCall());
-            StartCoroutine(GetUserInfoJson());
             StartCoroutine(AssetTest());
         } else {
             Debug.Log("Отсутствует файл ключа!\nДБ работать не будет");
         }
     }
-
-    public void externalGetStats() {
-        StartCoroutine(GetUserStats(ID));
-    }
     // Получение конкретно статов
-
-    IEnumerator GetUserStats(int userID) {
+    public IEnumerator GetUserStats() {
         needwait = true;
         UpdatingStats = true;
         WWWForm form = new WWWForm();
-        form.AddField("userID", userID);
+        form.AddField("userID", ID);
         WWW w = requst("GetUserStats", form);
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error) && w.text != ("Bad input")) {
@@ -81,32 +76,19 @@ public class DataBaseFunc : MonoBehaviour {
             lines = w.text.Split('\n');
             ID = int.Parse(lines[0]);
             Plogin = lines[1];
-            Ppass = lines[2];
-            Pmail = lines[3];
-            PT = int.Parse(lines[4]);
-            AGI = int.Parse(lines[5]);
-            INT = int.Parse(lines[6]);
-            STA = int.Parse(lines[7]);
-            STR = int.Parse(lines[8]);
-            EXP = int.Parse(lines[9]);
-            LVL = int.Parse(lines[10]);
-            IP = lines[11];
+            Pmail = lines[2];
+            PT = int.Parse(lines[3]);
+            AGI = int.Parse(lines[4]);
+            INT = int.Parse(lines[5]);
+            STA = int.Parse(lines[6]);
+            STR = int.Parse(lines[7]);
+            EXP = int.Parse(lines[8]);
+            LVL = int.Parse(lines[9]);
             UpdatingStats = true;
         } else {
             Debug.Log("ERROR: " + w.error + "\n");
         }
     }
-    // public IEnumerator UpdateValue (WWWForm form, string addr) {
-    //     form.AddField ("secretKeyCode", secretKey);
-    //     WWW w = new WWW (URL + addr, form);
-    //     yield return new WaitUntil (() => w.isDone == true);
-    //     if (string.IsNullOrEmpty (w.error) && !(w.text == "0")) {
-    //         // Debug.Log (w.text);
-    //     } else {
-    //         Debug.Log ("ERROR: " + w.error + "\n" + "Text" + w.text);
-    //     }
-    //     needwait = false;
-    // }
     IEnumerator GetItemsCall() {
         WWW w = requst("GetItems");
         yield return new WaitUntil(() => w.isDone == true);
@@ -114,27 +96,8 @@ public class DataBaseFunc : MonoBehaviour {
             parseItems = w.text;
             parseItems = "{\"Items\":" + parseItems + "}";
             items = JsonHelper.FromJson<JsonHelper.ItemLists>(parseItems);
-            // JsonData dsa;
-            // dsa = JsonMapper.ToObject(w.text);
         } else {
             Debug.Log(w.error);
-        }
-    }
-    IEnumerator GetUserInfoJson() {
-        WWW w = requst("test");
-        yield return new WaitUntil(() => w.isDone == true);
-        if (string.IsNullOrEmpty(w.error)) {
-            // Debug.Log(w.text);
-            // JsonData dsa;
-            // dsa = JsonMapper.ToObject(w.text);
-            // Debug.Log(dsa[0] + dsa[0]);
-            // TextAsset das;
-            // AssetDatabase.CreateAsset()
-            // foreach (var item in dsa) {
-            //     Debug.Log(item[0]);
-            // }
-        } else {
-
         }
     }
     public WWW requst(string addr, WWWForm form = null) {
@@ -148,14 +111,27 @@ public class DataBaseFunc : MonoBehaviour {
     void ParseJson(TextAsset dsa) {
 
     }
+    public IEnumerator UpdateValue(List<string> stat) {
+        string strRequst = string.Join(" ", stat.ToArray());
+        WWWForm form = new WWWForm();
+        form.AddField("val", strRequst);
+        form.AddField("userID", GSV.userData.id);
+        WWW w = requst("UpdateValue", form);
+        yield return new WaitUntil(() => w.isDone == true);
+        if (string.IsNullOrEmpty(w.error)) {
+            GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
+        }
+    }
     IEnumerator AssetTest() {
-        // bool UpdatingAssets;
-        // UpdatingAssets = true;
-        // WWWForm form = new WWWForm();
-        // form.AddField("userID", 1);
         WWW w = requst("test");
         yield return new WaitUntil(() => w.isDone == true);
-        if (string.IsNullOrEmpty(w.error)) { }
-        // UpdatingAssets = false;
+        if (string.IsNullOrEmpty(w.error)) {
+            // GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
+            // Debug.Log(w.text);
+            // File.WriteAllText("Assets/StreamingAssets/Json/UserInfo.json", w.text);
+
+        } else {
+            Debug.Log(w.error);
+        }
     }
 }

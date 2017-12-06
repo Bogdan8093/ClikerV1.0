@@ -28,13 +28,12 @@ public class switchTabs : MonoBehaviour {
         yield return new WaitUntil(() => data.selectedObject != null);
         int index = PUI_Tabs.FindIndex((o) => o == data.selectedObject);
         if (!PUI_Content[index].activeSelf) {
-            PUI_Content.ForEach((status) => {
-                if (status.activeSelf) {
-                    status.SetActive(false);
-                    GameObject obj = PUI_Tabs[PUI_Content.FindIndex((o) => o == status)];
-                    obj.transform.localPosition = new Vector2(obj.transform.localPosition.x, UP_Height);
+            for (int i = 0; i < PUI_Content.Count; i++) {
+                if (PUI_Content[i].activeSelf) {
+                    PUI_Content[i].SetActive(false);
+                    PUI_Tabs[i].transform.localPosition = new Vector2(PUI_Tabs[i].transform.localPosition.x, UP_Height);
                 }
-            });
+            }
             PUI_Content[index].SetActive(true);
             StartCoroutine(UP(index));
         }
