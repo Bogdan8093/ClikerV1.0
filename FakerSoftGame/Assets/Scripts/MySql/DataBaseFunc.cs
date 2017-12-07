@@ -24,12 +24,12 @@ public class DataBaseFunc : MonoBehaviour {
 
         if (BigMom.GSV.DBKey != null) {
             if (BigMom.GSV.UserID != 0) {
-                StartCoroutine(GetUserInf(BigMom.GSV.UserID));
+                StartCoroutine(GetUserData(BigMom.GSV.UserID));
             } else {
-                StartCoroutine(GetUserInf(1));
+                StartCoroutine(GetUserData(1));
             }
             StartCoroutine(GetItemsCall());
-            StartCoroutine(AssetTest());
+            // StartCoroutine(AssetTest());ss
         } else {
             Debug.Log("Отсутствует файл ключа!\nДБ работать не будет");
         }
@@ -40,18 +40,18 @@ public class DataBaseFunc : MonoBehaviour {
         UpdatingStats = true;
         WWWForm form = new WWWForm();
         form.AddField("userID", ID);
-        WWW w = requst("GetUserStats", form);
+        WWW w = requst("getuserstats", form);
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error) && w.text != ("Bad input")) {
             int[] lines = System.Array.ConvertAll<string, int>(w.text.Split('\n'), new System.Converter<string, int>(int.Parse));
-            ID = lines[0];
-            PT = lines[1];
-            AGI = lines[2];
-            INT = lines[3];
-            STA = lines[4];
-            STR = lines[5];
-            EXP = lines[6];
-            LVL = lines[7];
+            // ID = lines[0];
+            PT = lines[0];
+            AGI = lines[1];
+            INT = lines[2];
+            STA = lines[3];
+            STR = lines[4];
+            EXP = lines[5];
+            LVL = lines[6];
         } else {
             if (w.error != null) {
                 Debug.Log("ERROR: " + w.error + "\n");
@@ -65,10 +65,10 @@ public class DataBaseFunc : MonoBehaviour {
 
     // Получение полной инфы о юзвере
 
-    IEnumerator GetUserInf(int userID) {
+    IEnumerator GetUserData(int userID) {
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
-        WWW w = requst("GetUserInf", form);
+        WWW w = requst("getuserdata", form);
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
             // Debug.Log (w.text);
@@ -90,7 +90,7 @@ public class DataBaseFunc : MonoBehaviour {
         }
     }
     IEnumerator GetItemsCall() {
-        WWW w = requst("GetItems");
+        WWW w = requst("getitems");
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
             parseItems = w.text;

@@ -39,7 +39,7 @@ public class StatsUiScript : MonoBehaviour {
                 requst.Add("strength");
             }
             form.AddField("userID", BigMom.DBF.ID);
-            WWW w = BigMom.DBF.requst("UpdateStats", form);
+            WWW w = BigMom.DBF.requst("updatestats", form);
             yield return new WaitUntil(() => w.isDone == true);
             Reset();
             StartCoroutine(BigMom.DBF.GetUserStats());
