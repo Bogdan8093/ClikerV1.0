@@ -587,7 +587,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 385197508}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 344.5, y: 194, z: 0}
+  m_LocalPosition: {x: 335, y: 188.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 141810400}
@@ -650,6 +650,21 @@ MonoBehaviour:
   UserID: 0
   SecretID: 0
   status: 0
+  userData:
+    id: 0
+    points: 0
+    agility: 0
+    intelligence: 0
+    stamina: 0
+    strength: 0
+    experience: 0
+    level: 0
+    capacity: 0
+    gold: 0
+    status: 0
+    name: 
+    email: 
+  Key: {fileID: 4900000, guid: dee30285e32de4ebcbc08bf0d4beb46a, type: 3}
 --- !u!4 &394487799
 Transform:
   m_ObjectHideFlags: 0
