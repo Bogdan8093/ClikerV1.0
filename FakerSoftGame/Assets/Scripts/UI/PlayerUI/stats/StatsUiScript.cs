@@ -12,12 +12,12 @@ public class StatsUiScript : MonoBehaviour {
     private int[] TmpStats = new int[5];
     public Text[] StatFields = new Text[6];
     IEnumerator Start() {
-        yield return new WaitUntil(() => BigMom.DBF.LVL != 0);
+        yield return new WaitUntil(() => BigMom.DBF.Updating == false);
         reWriteStats();
     }
     // /*
     public IEnumerator Send() {
-        if (int.Parse(StatFields[0].text) != BigMom.DBF.PT) {
+        if (int.Parse(StatFields[0].text) != BigMom.GSV.userData.points) {
             StatFields[5].text = "Updating please wait";
             List<string> requst = new List<string>();
             requst.Add("points");
@@ -38,13 +38,12 @@ public class StatsUiScript : MonoBehaviour {
                 form.AddField("STR", TmpStats[4]);
                 requst.Add("strength");
             }
-            form.AddField("userID", BigMom.DBF.ID);
-            WWW w = BigMom.DBF.requst("updatestats", form);
+            WWW w = BigMom.DBF.requst("update_stats", form);
             yield return new WaitUntil(() => w.isDone == true);
             Reset();
-            StartCoroutine(BigMom.DBF.GetUserStats());
-            // StartCoroutine(BigMom.DBF.UpdateValue(requst));  // perevowy )
-            yield return new WaitUntil(() => BigMom.DBF.UpdatingStats == false);
+            // StartCoroutine(BigMom.GSV.userData.GetUserStats());
+            StartCoroutine(BigMom.DBF.UpdateValue(requst)); // perevowy )
+            yield return new WaitUntil(() => BigMom.DBF.Updating == false);
             reWriteStats();
             StatFields[5].text = "Success!";
             yield return new WaitForSeconds(2);
@@ -63,12 +62,12 @@ public class StatsUiScript : MonoBehaviour {
         }
     }
     public void reWriteStats() {
-        TmpStats[0] = BigMom.DBF.PT;
-        StatFields[0].text = BigMom.DBF.PT.ToString();
-        StatFields[1].text = BigMom.DBF.AGI.ToString();
-        StatFields[2].text = BigMom.DBF.INT.ToString();
-        StatFields[3].text = BigMom.DBF.STA.ToString();
-        StatFields[4].text = BigMom.DBF.STR.ToString();
+        TmpStats[0] = BigMom.GSV.userData.points;
+        StatFields[0].text = BigMom.GSV.userData.points.ToString();
+        StatFields[1].text = BigMom.GSV.userData.agility.ToString();
+        StatFields[2].text = BigMom.GSV.userData.intelligence.ToString();
+        StatFields[3].text = BigMom.GSV.userData.stamina.ToString();
+        StatFields[4].text = BigMom.GSV.userData.strength.ToString();
     }
     public void StatAssignment(bool direction, int record) {
         if (direction) {

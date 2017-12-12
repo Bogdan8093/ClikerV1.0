@@ -5,95 +5,70 @@ using System.IO;
 using LitJson;
 using UnityEngine;
 public class DataBaseFunc : MonoBehaviour {
-    // private string secretKey = BigMom.DBkey.dbsecretkey;
-    public int ID, PT, STR, AGI, INT, STA, EXP, LVL;
-    public string Plogin, Ppass, Pmail, IP;
-    public bool UpdatingStats, needwait;
+    // [Header("User stats")]
+    public bool Updating;
+    private bool Auth;
     public JsonHelper.ItemLists[] items;
-    public WWW www;
-    private string parseItems, secretKey, URL;
-    public GlobalServerValues GSV;
-    // private List<string> form = new List<string>();
-    // private TextAsset dsa;
+    private string secretKey, URL;
+    private GlobalServerValues GSV;
     // В скрипте происходит всякая магия. Не лезь - убьет!
 
     void Awake() {
-        secretKey = BigMom.GSV.DBKey;
+        GSV = GameObject.FindObjectOfType<GlobalServerValues>();
         URL = BigMom.GSV.URL;
         //Заглушка чтоб работало без логин сцены
-
-        if (BigMom.GSV.DBKey != null) {
-            if (BigMom.GSV.UserID != 0) {
-                StartCoroutine(GetUserData(BigMom.GSV.UserID));
+        if (BigMom.GSV.SecretKey != null) {
+            if (GSV.Auth == null) {
+                StartCoroutine(StringToken());
             } else {
-                StartCoroutine(GetUserData(1));
+                Auth = true;
             }
-            StartCoroutine(GetItemsCall());
-            // StartCoroutine(AssetTest());ss
+            StartCoroutine(AutoStart());
         } else {
             Debug.Log("Отсутствует файл ключа!\nДБ работать не будет");
         }
     }
-    // Получение конкретно статов
-    public IEnumerator GetUserStats() {
-        needwait = true;
-        UpdatingStats = true;
-        WWWForm form = new WWWForm();
-        form.AddField("userID", ID);
-        WWW w = requst("getuserstats", form);
-        yield return new WaitUntil(() => w.isDone == true);
-        if (string.IsNullOrEmpty(w.error) && w.text != ("Bad input")) {
-            int[] lines = System.Array.ConvertAll<string, int>(w.text.Split('\n'), new System.Converter<string, int>(int.Parse));
-            // ID = lines[0];
-            PT = lines[0];
-            AGI = lines[1];
-            INT = lines[2];
-            STA = lines[3];
-            STR = lines[4];
-            EXP = lines[5];
-            LVL = lines[6];
-        } else {
-            if (w.error != null) {
-                Debug.Log("ERROR: " + w.error + "\n");
-            } else {
-                Debug.Log("Кривой ввод");
-            }
-        }
-        UpdatingStats = false;
-        needwait = false;
+    IEnumerator AutoStart() {
+        yield return new WaitUntil(() => Auth == true);
+        StartCoroutine(GetUserData());
+        StartCoroutine(GetItemsCall());
     }
 
-    // Получение полной инфы о юзвере
-
-    IEnumerator GetUserData(int userID) {
+    // Получение конкретизированных параметров персонажа
+    public IEnumerator UpdateValue(List<string> stat) {
+        Updating = true;
+        string strRequst = string.Join(" ", stat.ToArray());
         WWWForm form = new WWWForm();
-        form.AddField("userID", userID);
-        WWW w = requst("getuserdata", form);
+        form.AddField("val", strRequst);
+        WWW w = requst("update_value", form);
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
-            // Debug.Log (w.text);
-            string[] lines = new string[14];
-            lines = w.text.Split('\n');
-            ID = int.Parse(lines[0]);
-            Plogin = lines[1];
-            Pmail = lines[2];
-            PT = int.Parse(lines[3]);
-            AGI = int.Parse(lines[4]);
-            INT = int.Parse(lines[5]);
-            STA = int.Parse(lines[6]);
-            STR = int.Parse(lines[7]);
-            EXP = int.Parse(lines[8]);
-            LVL = int.Parse(lines[9]);
-            UpdatingStats = true;
+            // Debug.Log(w.text);
+            JsonUtility.FromJsonOverwrite(w.text, GSV.userData);
+            // GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
+            // Debug.Log(w.text);
+        }
+        Updating = false;
+    }
+    // Получение полной инфы о юзвере
+    // Не использовать в личных целях перезаписывает ластвизит
+
+    IEnumerator GetUserData() {
+        Updating = true;
+        WWW w = requst("user_data");
+        yield return new WaitUntil(() => w.isDone == true);
+        if (string.IsNullOrEmpty(w.error)) {
+            GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
         } else {
             Debug.Log("ERROR: " + w.error + "\n");
         }
+        Updating = false;
     }
     IEnumerator GetItemsCall() {
-        WWW w = requst("getitems");
+        WWW w = requst("get_items");
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
-            parseItems = w.text;
+            string parseItems = w.text;
             parseItems = "{\"Items\":" + parseItems + "}";
             items = JsonHelper.FromJson<JsonHelper.ItemLists>(parseItems);
         } else {
@@ -101,35 +76,39 @@ public class DataBaseFunc : MonoBehaviour {
         }
     }
     public WWW requst(string addr, WWWForm form = null) {
+
+        byte[] data;
         if (form == null) {
             form = new WWWForm();
+            data = null;
+        } else {
+            form.AddField("dsa", "dsa");
+            data = form.data;
         }
-        form.AddField("secretKeyCode", secretKey);
-        WWW requst = new WWW(URL + addr, form);
+        var header = new Dictionary<string, string>();
+        header["Accept"] = "application/json";
+        header["Authorization"] = GSV.Auth[0] + " " + GSV.Auth[2];
+        WWW requst = new WWW(URL + addr, data, header);
         return requst;
     }
-    void ParseJson(TextAsset dsa) {
-
-    }
-    public IEnumerator UpdateValue(List<string> stat) {
-        string strRequst = string.Join(" ", stat.ToArray());
+    IEnumerator StringToken() {
         WWWForm form = new WWWForm();
-        form.AddField("val", strRequst);
-        form.AddField("userID", GSV.userData.id);
-        WWW w = requst("UpdateValue", form);
+        form.AddField("id", GSV.SecretID);
+        form.AddField("secret", GSV.SecretKey);
+        form.AddField("email", "vlad94@ukr.net");
+        form.AddField("password", "123456");
+        WWW w = new WWW(URL + "login", form);
         yield return new WaitUntil(() => w.isDone == true);
-        if (string.IsNullOrEmpty(w.error)) {
-            GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
-        }
+        GSV.Auth = JsonMapper.ToObject(w.text);
+        Auth = true;
     }
     IEnumerator AssetTest() {
-        WWW w = requst("test");
+
+        WWW w = requst("user_data");
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
             // GSV.userData = JsonMapper.ToObject<GlobalServerValues.UserData>(w.text);
-            // Debug.Log(w.text);
-            // File.WriteAllText("Assets/StreamingAssets/Json/UserInfo.json", w.text);
-
+            Debug.Log(w.text);
         } else {
             Debug.Log(w.error);
         }

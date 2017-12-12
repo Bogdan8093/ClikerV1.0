@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using LitJson;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -22,7 +23,7 @@ public class registeration : MonoBehaviour {
     public bool[] confirm = new bool[4];
 
     //  Private
-    private string key, URL;
+    private string URL;
     private bool w8;
     private int SIN; // SelectedItemNumber
     private Sprite loadingSprite;
@@ -32,7 +33,6 @@ public class registeration : MonoBehaviour {
     AuthInputValidation AIV;
 
     void Awake() {
-        key = BigMom.GSV.DBKey;
         URL = BigMom.GSV.URL;
         loadingSprite = Resources.Load<Sprite>("auth/loading1");
         checkBox = Resources.LoadAll<Sprite>("auth/checkBox/checkBox");
@@ -69,28 +69,14 @@ public class registeration : MonoBehaviour {
         // /*
         if (Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Return)) {
             if (EventSystem.current.currentSelectedGameObject.GetComponent<InputField>() != null) {
-                // если следующий выбранный елемент имеет тип баттон
                 if (selectableObj[SIN + 1].GetType() == typeof(Button)) {
-                    // spriteState
-                    // button[0].image.color = Color.black;
-                    // Debug.Log(EventSystem.current.currentInputModule);
                     reg();
-                    // button[0]. = buttonColors[1];
-                    // EventSystem.current.SetSelectedGameObject (selectableObj[SelectedItemNumber].gameObject);
+                    EventSystem.current.SetSelectedGameObject(button[0].gameObject);
+                    EventSystem.current.SetSelectedGameObject(inputs[3].gameObject);
                 } else {
                     SIN += 1;
                     EventSystem.current.SetSelectedGameObject(selectableObj[SIN].gameObject);
                 }
-            }
-        }
-        //  */
-        // /* 
-        if (Input.GetKeyUp(KeyCode.KeypadEnter) || Input.GetKeyUp(KeyCode.Return)) {
-            if (selectableObj[SIN + 1].GetType() == typeof(Button)) {
-                // spriteState
-                // button[0].image.color = Color.white;
-                EventSystem.current.SetSelectedGameObject(button[0].gameObject);
-                EventSystem.current.SetSelectedGameObject(inputs[3].gameObject);
             }
         }
         // */
@@ -108,7 +94,7 @@ public class registeration : MonoBehaviour {
         StartCoroutine(loading(0));
         WWWForm form = new WWWForm();
         form.AddField("login", login);
-        WWW w = requst("loginCheck", form);
+        WWW w = requst("check_login", form);
         yield return new WaitUntil(() => w.isDone == true);
         w8 = false;
         if (string.IsNullOrEmpty(w.error)) {
@@ -137,7 +123,7 @@ public class registeration : MonoBehaviour {
         TextOutput.text = "Connecting please wait ";
         WWWForm form = new WWWForm();
         form.AddField("email", email);
-        WWW w = requst("emailCheck", form);
+        WWW w = requst("check_email", form);
         yield return new WaitUntil(() => w.isDone == true);
         w8 = false;
         if (string.IsNullOrEmpty(w.error)) {
@@ -168,25 +154,17 @@ public class registeration : MonoBehaviour {
         yield return new WaitUntil(() => w8 == false);
         w8 = true;
         WWWForm form = new WWWForm();
-        form.AddField("login", inputs[0].text);
+        form.AddField("name", inputs[0].text);
         form.AddField("email", inputs[1].text);
-        form.AddField("pass", inputs[3].text);
-        WWW ip = new WWW("http://ipecho.net/plain");
-        yield return new WaitUntil(() => ip.isDone == true);
-        form.AddField("ip", ip.text);
-        WWW w = requst("reg", form);
+        form.AddField("password", inputs[3].text);
+        WWW w = requst("register", form);
         yield return new WaitUntil(() => w.isDone == true);
         if (string.IsNullOrEmpty(w.error)) {
-            int responce = int.Parse(w.text);
-            if (responce > 0) {
-                BigMom.GSV.UserID = responce;
-                SceneManager.LoadScene("Tavern Scene", LoadSceneMode.Single);
-            }
-            if (responce == 0) {
-                TextOutput.text = "Error";
-            }
+            BigMom.GSV.Auth = JsonMapper.ToObject(w.text);
+            SceneManager.LoadScene("Tavern Scene", LoadSceneMode.Single);
         } else {
             Debug.Log(w.error);
+            Debug.Log(w.text);
         }
         w8 = false;
         foreach (Selectable item in selectableObj) {
@@ -229,7 +207,6 @@ public class registeration : MonoBehaviour {
         img[InputField].color = Color.white;
     }
     private WWW requst(string addr, WWWForm form) {
-        form.AddField("secretKeyCode", key);
         WWW requst = new WWW(URL + addr, form);
         return requst;
     }
